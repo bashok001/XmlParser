@@ -5,7 +5,7 @@ std::string Utilities::trimCharacters( " \f\n\r\t\v" );
 
 void title( const std::string& title,char underline ) {
 	std::cout << "\n  " << title;
-	std::cout << "\n " << std::string( title.size() + 2,underline ) <<"\n";
+	std::cout << "\n " << std::string( title.size() + 2,underline ) << "\n";
 }
 
 void Utilities::trimRight( std::string& str,const trimChars& trimChars ) {
@@ -25,7 +25,7 @@ Utilities::stringOut &Utilities::trim( std::string& str,const trimChars& trimCha
 
 Utilities::stringOut Utilities::toLower( const std::string str ) {
 	std::string lowerStr = "";
-	for( size_t i = 0; i<str.length(); i++ ) {
+	for( size_t i = 0; i < str.length(); i++ ) {
 		lowerStr += ( ( char )tolower( str.at( i ) ) );
 	}
 	return lowerStr;
@@ -49,9 +49,9 @@ int main() {
 	ab = "       Ashok Bom			";
 	utils->trim( ab );
 	std::cout << "\n+" << ab << "+\n";
-	std::cout << "\n" << utils->toLower(ab)<<"\n";
+	std::cout << "\n" << utils->toLower( ab ) << "\n";
 	std::string bc = "ashOK BOM";
-	std::cout << utils->equalsIgnoreCase( ab,bc )<<"\n";
+	std::cout << utils->equalsIgnoreCase( ab,bc ) << "\n";
 }
 
 #endif

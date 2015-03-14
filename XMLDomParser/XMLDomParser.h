@@ -10,11 +10,11 @@ class XmlDomParser {
 	XmlDomParser();
 
 	public:
-	XmlDomParser(const XmlString& _xmlString );
+	XmlDomParser( const XmlString& _xmlString );
 	virtual ~XmlDomParser();
 
 	private:
-
+	
 };
 
 #endif
