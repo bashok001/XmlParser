@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{42AD1BC8-1803-4888-8CF4-B7A4978BA40D}</ProjectGuid>
+    <ProjectGuid>{50BD49DC-9502-4845-8E1C-467819CC178A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>XMLDomParser</RootNamespace>
+    <RootNamespace>XmlTaggedElement</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);TEST_XMLDOCPARSER;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -76,11 +76,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="XMLDomParser.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\XmlDocument\XmlDoc.cpp" />
-    <ClCompile Include="XmlDomParser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

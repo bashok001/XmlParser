@@ -15,15 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="XMLDomParser.h">
+    <ClInclude Include="XmlProcElem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="XmlDomParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\XmlDocument\XmlDoc.cpp">
+    <ClCompile Include="XmlProcElem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

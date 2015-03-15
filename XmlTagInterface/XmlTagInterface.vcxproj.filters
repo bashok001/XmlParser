@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IXmlTag.h">
+    <ClInclude Include="IXmlElem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
