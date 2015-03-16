@@ -14,4 +14,6 @@ class XmlAttr : public ITagAttr {
 
 	virtual std::string& getValue();
 	void setValue( const std::string& value );
+
+	virtual const std::string toString();
 };

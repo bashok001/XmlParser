@@ -6,4 +6,5 @@ class ITagAttr {
 	public:
 	virtual attributeC &getName() = 0;
 	virtual attributeC &getValue() = 0;
+	virtual const attributeC toString() = 0;
 };

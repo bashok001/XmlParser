@@ -79,6 +79,7 @@
     <ClInclude Include="XmlProcElem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Utilities\Utilities.cpp" />
     <ClCompile Include="XmlProcElem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -12,12 +12,12 @@ class IXmlElem {
 	virtual xmlTagC &getName() = 0;
 	virtual std::vector<ITagAttr *> &getAllAttributes() = 0;
 	virtual xmlTagC &getContent() = 0;
-	virtual std::list<IXmlElem *> &getChildren() = 0;
 
 	virtual xmlTagC getAttributeValue( const xmlTagC& name ) = 0;
 
-	virtual void addChild( IXmlElem* xmlTag ) = 0;
-	virtual void removeChild( IXmlElem* xmlTag ) = 0;
+	virtual std::list<IXmlElem *> &getChildren() { return std::list < IXmlElem * > {};  };
+	virtual void addChild( IXmlElem* xmlTag ) {};
+	virtual void removeChild( IXmlElem* xmlTag ) {};
 
 	virtual xmlTagC toString() = 0;
 
