@@ -17,7 +17,9 @@ class Utilities {
 	stringOut &trim( std::string& str,const trimChars& trimChars = trimCharacters );
 	stringOut toLower( const std::string str );
 	bool equalsIgnoreCase( const std::string a,const std::string b );
-
+	
+	stringOut indentString( int depth );
+	
 	~Utilities() {}
 };
 #endif

@@ -35,6 +35,12 @@ bool Utilities::equalsIgnoreCase( const std::string strA,const std::string strB 
 	return( Utilities::toLower( strA ) == Utilities::toLower( strB ) );
 }
 
+Utilities::stringOut Utilities::indentString( int depth ) {
+	std::string indent = "";
+	for( int i = 0; i<depth; i++ ) indent += " ";
+	return indent;
+}
+
 #ifdef TEST_UTILITIES
 
 int main() {

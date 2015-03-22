@@ -8,7 +8,7 @@ XmlDoc::XmlDoc() {
 }
 
 XmlDoc::~XmlDoc() {
-	
+
 }
 
 IXmlElem *XmlDoc::getRoot() {
@@ -45,21 +45,37 @@ void XmlDoc::setEpilogue( std::list<IXmlElem*> epilogueElems ) {
 		_epilogue.push_back( epilogElem );
 }
 
-std::string XmlDoc::toString() {
+std::string XmlDoc::toString( int depth ) {
 	std::string xmlStr;
-	xmlStr.append( _procElem->toString() );
-	for( auto prologElem : _prologue )
-		xmlStr.append( prologElem->toString() );
-	xmlStr.append( _docRoot->toString() );
-	for( auto epilogElem : _epilogue )
-		xmlStr.append( epilogElem->toString() );
+	//Processing instructions
+	if( _procElem != NULL )
+		xmlStr.append( _procElem->toString( 0 ) );
+	xmlStr.append( "\n" );
+
+	//Preceding Comments
+	for( auto prologElem : _prologue ) {
+		xmlStr.append( "\n" );
+		if( prologElem != NULL )
+			xmlStr.append( prologElem->toString( 0 ) );
+	}
+	//Root Element
+	if( _docRoot != NULL )
+		xmlStr.append( _docRoot->toString( 0 ) );
+	xmlStr.append( "\n" );
+
+	//Ending Comments
+	for( auto epilogElem : _epilogue ) {
+		xmlStr.append( "\n" );
+		if( epilogElem != NULL )
+			xmlStr.append( epilogElem->toString( 0 ) );
+	}
 	return xmlStr;
 }
 
 #ifdef TEST_XMLDOC
 
 int main(){
-	
+
 }
 
 #endif

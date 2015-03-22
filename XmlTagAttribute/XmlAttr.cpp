@@ -26,7 +26,7 @@ void XmlAttr::setValue( const std::string& value ) {
 }
 
 const std::string XmlAttr::toString() {
-	return std::string(_name+" = "+_value);
+	return std::string(" "+_name+" = "+_value+" ");
 }
 
 #ifdef TEST_XMLATTR

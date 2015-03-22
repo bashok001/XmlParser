@@ -1,3 +1,6 @@
+#ifndef XMLATTR_H
+#define XMLATTR_H
+
 #include "../XmlAttributeInterface/ITagAttr.h"
 
 class XmlAttr : public ITagAttr {
@@ -17,3 +20,5 @@ class XmlAttr : public ITagAttr {
 
 	virtual const std::string toString();
 };
+
+#endif

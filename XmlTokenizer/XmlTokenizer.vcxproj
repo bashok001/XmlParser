@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3B35A8C5-A1D9-438D-AE21-7BE2134FA02E}</ProjectGuid>
+    <ProjectGuid>{D8ECE2A6-7913-4935-AAB5-DC295E27EC41}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>XMLFactory</RootNamespace>
+    <RootNamespace>XmlTokenizer</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);TEST_XMLPARTSFACTORY;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);TEST_XMLTOKENIZER;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -76,15 +76,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="XmlPartsFactory.h" />
+    <ClInclude Include="ITokCollection.h" />
+    <ClInclude Include="XmlTokenizer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Utilities\Utilities.cpp" />
-    <ClCompile Include="..\XmlCommentElement\XmlCommentElem.cpp" />
-    <ClCompile Include="..\XmlProcElement\XmlProcElem.cpp" />
-    <ClCompile Include="..\XmlTagAttribute\XmlAttr.cpp" />
-    <ClCompile Include="..\XmlTaggedElement\XmlTaggedElem.cpp" />
-    <ClCompile Include="XmlPartsFactory.cpp" />
+    <ClCompile Include="..\Tokenizer\Tokenizer.cpp" />
+    <ClCompile Include="XmlTokenizer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

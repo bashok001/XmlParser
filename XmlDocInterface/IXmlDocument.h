@@ -1,3 +1,6 @@
+#ifndef IXMLDOCUMENT_H
+#define IXMLDOCUMENT_H
+
 #include "../XmlTagInterface/IXmlElem.h"
 
 class IXmlDocument {
@@ -7,3 +10,5 @@ class IXmlDocument {
 	virtual std::list<IXmlElem*> getPrologue() = 0;
 	virtual std::list<IXmlElem*> getEpilogue() = 0;
 };
+
+#endif
