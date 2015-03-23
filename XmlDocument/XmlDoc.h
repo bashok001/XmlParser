@@ -7,7 +7,7 @@
 class XmlDoc : public IXmlDocument {
 	private:
 	IXmlElem* _docRoot;
-	IXmlElem* _procElem;
+	std::list<IXmlElem*> _procElem;
 	std::list<IXmlElem*> _prologue;
 	std::list<IXmlElem*> _epilogue;
 	bool _valid;
@@ -17,8 +17,8 @@ class XmlDoc : public IXmlDocument {
 	virtual ~XmlDoc();
 	virtual IXmlElem *getRoot();
 	void setDocRoot( IXmlElem *docRoot );
-	virtual IXmlElem *getProcessingInstr();
-	void setProcElem( IXmlElem *procElem );
+	virtual std::list<IXmlElem *> getProcessingInstr();
+	void setProcElem( IXmlElem * procElem );
 	virtual std::list<IXmlElem*> getPrologue();
 	void setPrologue( std::list<IXmlElem*> prologueElems );
 	virtual std::list<IXmlElem*> getEpilogue();

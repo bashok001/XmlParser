@@ -43,8 +43,7 @@ XmlProcElem::xmlTagC XmlProcElem::getAttributeValue( const xmlTagC& name ) {
 	return "";
 }
 
-XmlProcElem::xmlTagC XmlProcElem::toString(int depth) {
-	std::string xmlStr;
+void XmlProcElem::toString( int depth,std::string& xmlStr ) {
 	xmlStr.append( _util->indentString( depth ) );
 	xmlStr.append( "<?" );
 	xmlStr.append( _name );
@@ -52,7 +51,6 @@ XmlProcElem::xmlTagC XmlProcElem::toString(int depth) {
 		xmlStr.append(attr->toString());
 	}
 	xmlStr.append( " ?>" );
-	return xmlStr;
 }
 
 #ifdef TEST_XMLPROCELEM

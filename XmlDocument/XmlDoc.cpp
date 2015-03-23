@@ -2,9 +2,10 @@
 
 XmlDoc::XmlDoc() {
 	_docRoot = NULL;
-	_procElem = NULL;
+	_procElem = {};
 	_prologue = {};
 	_epilogue = {};
+	_valid = false;
 }
 
 XmlDoc::~XmlDoc() {
@@ -19,12 +20,12 @@ void XmlDoc::setDocRoot( IXmlElem *docRoot ) {
 	_docRoot = docRoot;
 }
 
-IXmlElem* XmlDoc::getProcessingInstr() {
+std::list<IXmlElem *> XmlDoc::getProcessingInstr() {
 	return _procElem;
 }
 
-void XmlDoc::setProcElem( IXmlElem *procElem ) {
-	_procElem = procElem;
+void XmlDoc::setProcElem( IXmlElem * procElem ) {
+	_procElem.push_back(procElem);
 }
 
 std::list<IXmlElem*> XmlDoc::getPrologue() {
@@ -46,30 +47,37 @@ void XmlDoc::setEpilogue( std::list<IXmlElem*> epilogueElems ) {
 }
 
 std::string XmlDoc::toString( int depth ) {
-	std::string xmlStr;
-	//Processing instructions
-	if( _procElem != NULL )
-		xmlStr.append( _procElem->toString( 0 ) );
-	xmlStr.append( "\n" );
+	if( _valid ) {
+		std::string xmlStr;
+		//Processing instructions
+		for( auto procElem : _procElem ) {
+			xmlStr.append( "\n" );
+			if( procElem != NULL )
+				procElem->toString( depth,xmlStr );
+		}
 
-	//Preceding Comments
-	for( auto prologElem : _prologue ) {
+		//Preceding Comments
+		for( auto prologElem : _prologue ) {
+			xmlStr.append( "\n" );
+			if( prologElem != NULL )
+				prologElem->toString( depth,xmlStr );
+		}
 		xmlStr.append( "\n" );
-		if( prologElem != NULL )
-			xmlStr.append( prologElem->toString( 0 ) );
-	}
-	//Root Element
-	if( _docRoot != NULL )
-		xmlStr.append( _docRoot->toString( 0 ) );
-	xmlStr.append( "\n" );
-
-	//Ending Comments
-	for( auto epilogElem : _epilogue ) {
+		//Root Element
+		if( _docRoot != NULL )
+			_docRoot->toString( 0,xmlStr );
 		xmlStr.append( "\n" );
-		if( epilogElem != NULL )
-			xmlStr.append( epilogElem->toString( 0 ) );
-	}
-	return xmlStr;
+		//Ending Comments
+		for( auto epilogElem : _epilogue ) {
+			xmlStr.append( "\n" );
+			if( epilogElem != NULL )
+				epilogElem->toString( depth,xmlStr );
+		}
+		return xmlStr;
+	} else
+		return "Not a valid XML. \n";
+	//TODO EXCEPTION
+	
 }
 
 #ifdef TEST_XMLDOC

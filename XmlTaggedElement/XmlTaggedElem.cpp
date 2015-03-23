@@ -74,27 +74,28 @@ void XmlTaggedElem::removeChild( IXmlElem* xmlTag ) {
 	_children.remove( xmlTag );
 }
 
-XmlTaggedElem::xmlTagC XmlTaggedElem::toString(int depth) {
-	xmlTagC xmlStr;
-	xmlStr.append( _util->indentString( depth ) );
-	xmlStr.append( "<" + this->getName() + " " );
+void XmlTaggedElem::toString( int depth,std::string& xmlStr ) {
+	std::string indentation = _util->indentString( depth );
+
+	xmlStr.append( indentation+"<" + this->getName() + " " );
 	std::vector<ITagAttr *> attrs = this->getAllAttributes();
 	for( auto attr : attrs ) {
 		xmlStr.append( attr->toString() );
 	}
 	xmlStr.append( ">" );
-	xmlStr.append( this->getContent() );
-
+	
+	xmlStr.append(indentation+this->getContent() );
 	std::list<IXmlElem *> childTag=this->getChildren();
 	auto iter = childTag.begin();
 	while( iter != childTag.end() ) {
 		IXmlElem *child = *iter;
-		child->toString( depth + 1 );
+		xmlStr.append( "\n" );
+		child->toString( depth + 1, xmlStr );
 		iter++;
 	}
-
-	xmlStr.append( "</"+this->getName()+">" );
-	return xmlStr;
+	xmlStr.append( "\n" );
+	
+	xmlStr.append( indentation+"</"+this->getName()+">" );
 }
 
 #ifdef TEST_XMLTAGGEDELEM

@@ -28,7 +28,7 @@ class XmlTaggedElem : public  IXmlElem {
 	void addChild( IXmlElem* xmlTag );
 	void removeChild( IXmlElem* xmlTag );
 
-	xmlTagC toString(int depth);
+	void toString( int depth,std::string& xmlStr );
 
 	private:
 	xmlTagC	_name;

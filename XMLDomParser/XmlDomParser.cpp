@@ -12,18 +12,14 @@
 XmlDomParser::XmlDomParser( const XmlString& _xmlString ) {
 	_util = new Utilities();
 	_xmlDoc = new XmlDoc();
-
 	std::list<IXmlElem*> prologList;
 	std::list<IXmlElem*> epilogList;
-
 	bool isRoot = false;
 	Toker tokenizer( _xmlString,false );
 	tokenizer.setMode( Toker::xml );
 	XmlParts parts( &tokenizer );
 	std::stack < IXmlElem* > xmlElemStack;
-
 	while( parts.get() ) {
-		std::cout << "a " << parts.show().c_str() << std::endl;
 		if( isProcElement( parts.getToks() ) ) {
 			IXmlElem* procElem = makeProcElement( parts.getToks() );
 			_xmlDoc->setProcElem( procElem );
@@ -38,12 +34,11 @@ XmlDomParser::XmlDomParser( const XmlString& _xmlString ) {
 			addtoXml( xmlElemStack,parts.getToks(),_xmlDoc );
 		}
 	}
-	if( isRoot ) {
+	if( isRoot && xmlElemStack.size()==0) {
 		_xmlDoc->setValid();
 	}
 	_xmlDoc->setPrologue( prologList );
 	_xmlDoc->setEpilogue( epilogList );
-	std::cout << _xmlDoc->toString( 0 ) << std::endl;
 }
 
 XmlDomParser::~XmlDomParser() {
@@ -88,10 +83,17 @@ bool XmlDomParser::isClosedTag( xmlTokenVector tokVector ) {
 	return false;
 }
 
+bool XmlDomParser::isSelfClosingElem( xmlTokenVector tokVector ) {
+	if( tokVector.size() > 2 )
+		if( _util->equalsIgnoreCase( tokVector.at( 0 ),"<" ) && _util->equalsIgnoreCase( tokVector.at( tokVector.size() - 2 ),"/" ) && _util->equalsIgnoreCase( tokVector.at( tokVector.size() - 1 ),">" ) )
+			return true;
+	return false;
+}
+
 IXmlElem* XmlDomParser::makeProcElement( xmlTokenVector tokVector ) {
 	if( XmlProcElem* xmlProcElement = dynamic_cast< XmlProcElem* > ( XmlPartsFactory::getXmlElement( 1 ) ) ) {
-		xmlProcElement->setName( tokVector.at( 2 ) );
-		for( int i = 3; i < tokVector.size() - 2; i++ ) {
+		xmlProcElement->setName( createName(tokVector) );
+		for( int i = getIndex(tokVector,"=")-1; i < tokVector.size() - 2; i++ ) {
 			ITagAttr* xmlAttribute = new XmlAttr();
 			XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
 			xmlAttr->setName( tokVector.at( i ) );
@@ -117,33 +119,12 @@ IXmlElem* XmlDomParser::makeCommentElement( xmlTokenVector tokVector ) {
 }
 
 void XmlDomParser::addtoXml( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc ) {
-	if( isOpenTag( tokens ) ) {
-		if( XmlTaggedElem* xmlTaggedElement = dynamic_cast< XmlTaggedElem* > ( XmlPartsFactory::getXmlElement( 3 ) ) ) {
-			xmlTaggedElement->setName( tokens.at( 1 ) );
-			for( int i = 2; i < tokens.size() - 1; i++ ) {
-				ITagAttr* xmlAttribute = new XmlAttr();
-				XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
-				xmlAttr->setName( tokens.at( i ) );
-				i = i + 2;
-				xmlAttr->setValue( tokens.at( i ) );
-				xmlTaggedElement->addAttribute( xmlAttr );
-			}
-
-			if( xmlElemStack.size() > 0 ) {
-				XmlTaggedElem* topXmlTaggedElem = dynamic_cast< XmlTaggedElem* > ( xmlElemStack.top() );
-				topXmlTaggedElem->addChild( xmlTaggedElement );
-			}
-			xmlElemStack.push( xmlTaggedElement );
-		}
+	if( isSelfClosingElem( tokens ) ) {
+		handleSelfCloseTag( xmlElemStack,tokens,xmlDoc );
+	} else if( isOpenTag( tokens ) ) {
+		handleOpenTag( xmlElemStack,tokens,xmlDoc );
 	} else if( isClosedTag( tokens ) ) {
-
-		if( xmlElemStack.size() == 1 ) {
-			XmlTaggedElem* topXmlTaggedElem = dynamic_cast< XmlTaggedElem* > ( xmlElemStack.top() );
-			xmlDoc->setDocRoot( topXmlTaggedElem );
-		}
-
-		xmlElemStack.pop();
-
+		handleCloseTag( xmlElemStack,tokens,xmlDoc );
 	} else {
 		XmlTaggedElem* topXmlTaggedElem = dynamic_cast< XmlTaggedElem* > ( xmlElemStack.top() );
 		std::string content;
@@ -153,16 +134,106 @@ void XmlDomParser::addtoXml( std::stack < IXmlElem* >& xmlElemStack,std::vector<
 	}
 }
 
+void XmlDomParser::handleOpenTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc ) {
+	if( XmlTaggedElem* xmlTaggedElement = dynamic_cast< XmlTaggedElem* > ( XmlPartsFactory::getXmlElement( 3 ) ) ) {
+		xmlTaggedElement->setName( createName( tokens ) );
+		for( int i = 2; i < tokens.size() - 1; i++ ) {
+			ITagAttr* xmlAttribute = new XmlAttr();
+			XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
+			xmlAttr->setName( tokens.at( i ) );
+			i = i + 2;
+			xmlAttr->setValue( tokens.at( i ) );
+			if( _util->equalsIgnoreCase( xmlAttr->getName(),"tagid" ) ) {
+				xmlTaggedElement->setIdAttributeValue(xmlAttr->getValue());
+			}
+			xmlTaggedElement->addAttribute( xmlAttr );
+		}
+		if( xmlElemStack.size() > 0 ) {
+			XmlTaggedElem* topXmlTaggedElem = dynamic_cast< XmlTaggedElem* > ( xmlElemStack.top() );
+			topXmlTaggedElem->addChild( xmlTaggedElement );
+		}
+		xmlElemStack.push( xmlTaggedElement );
+	}
+}
+
+void XmlDomParser::handleCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc ) {
+	if( xmlElemStack.size() == 1 ) {
+		XmlTaggedElem* topXmlTaggedElem = dynamic_cast< XmlTaggedElem* > ( xmlElemStack.top() );
+		xmlDoc->setDocRoot( topXmlTaggedElem );
+	}
+	if( !xmlElemStack.empty() )
+		xmlElemStack.pop();
+	else {
+		//TODO EXCEPTION;
+		std::cout << "Not a Valid XML. \n";
+		exit( 1 );
+	}
+}
+
+void XmlDomParser::handleSelfCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc ) {
+	if( XmlTaggedElem* xmlTaggedElement = dynamic_cast< XmlTaggedElem* > ( XmlPartsFactory::getXmlElement( 3 ) ) ) {
+		xmlTaggedElement->setName( tokens.at( 1 ) );
+		for( int i = 2; i < tokens.size() - 2; i++ ) {
+			ITagAttr* xmlAttribute = new XmlAttr();
+			XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
+			xmlAttr->setName( tokens.at( i ) );
+			i = i + 2;
+			xmlAttr->setValue( tokens.at( i ) );
+			xmlTaggedElement->addAttribute( xmlAttr );
+		}
+		if( xmlElemStack.size() > 0 ) {
+			XmlTaggedElem* topXmlTaggedElem = dynamic_cast< XmlTaggedElem* > ( xmlElemStack.top() );
+			topXmlTaggedElem->addChild( xmlTaggedElement );
+		}
+		xmlElemStack.push( xmlTaggedElement );
+		if( xmlElemStack.size() == 1 ) {
+			XmlTaggedElem* topXmlTaggedElem = dynamic_cast< XmlTaggedElem* > ( xmlElemStack.top() );
+			xmlDoc->setDocRoot( topXmlTaggedElem );
+		}
+	}
+	if( !xmlElemStack.empty() )
+		xmlElemStack.pop();
+	else {
+		//TODO EXCEPTION;
+		std::cout << "Not a Valid XML. \n";
+		exit( 1 );
+	}
+		
+}
+
+XmlDomParser::XmlString XmlDomParser::createName( xmlTokenVector tokVector ) {
+	std::string tagName;
+	int index = getIndex( tokVector,"=" );
+	if( index != std::numeric_limits<int>::max() ) {
+		for( int i = 2; i < index-1; i++ ) {
+			tagName += tokVector[ i ];
+		}
+		return tagName;
+	}
+	return "";
+}
+
+int XmlDomParser::getIndex( xmlTokenVector tokVector,const std::string& charString ) {
+	auto itr = std::find( tokVector.begin(),tokVector.end(),charString );
+	if( itr != tokVector.end() ) {
+		int index = std::distance( tokVector.begin(),itr );
+		return index;
+	}
+	return std::numeric_limits<int>::max();
+}
+
 #ifdef TEST_XMLDOCPARSER
 
 int main() {
 	static std::string xmldata( "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\
+								<?xml-stylesheet type=\"text / xsl\" href=\"style.xsl\"?>\
 								<!-- Operating Systems -->\
 								<!-- Microsoft -->\
 								<OSes>\
+								<OS name=\"Linux\" />\
 								<OS name=\"Microsoft-Windows-8.1\">\
 								<SetupLanguage>\
-								<UILang>en-IN</UILang>\
+								<UILang tagid=\"ui\">en-IN</UILang>\
 								<ShowUI>OnError</ShowUI>\
 								</SetupLanguage>\
 								<SysLocale>en-US</SysLocale>\
@@ -170,6 +241,8 @@ int main() {
 								</OS>\
 								</OSes>" );
 	XmlDomParser xdom( xmldata );
+	std::cout<<xdom.getXmlDoc()->toString( 0 );
+
 }
 
 #endif

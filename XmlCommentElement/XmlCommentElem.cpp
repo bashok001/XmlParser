@@ -17,14 +17,11 @@ XmlCommentElem::xmlTagC &XmlCommentElem::getContent() {
 	return _content;
 }
 
-XmlCommentElem::xmlTagC XmlCommentElem::toString(int depth) {
-	XmlCommentElem::xmlTagC xmlStr;
+void XmlCommentElem::toString( int depth,std::string& xmlStr ) {
 	xmlStr.append(_util->indentString( depth ));
 	xmlStr.append( "<!-- " );
 	xmlStr.append( _content );
 	xmlStr.append( " -->" );
-
-	return xmlStr;
 }
 
 

@@ -37,7 +37,7 @@ bool Utilities::equalsIgnoreCase( const std::string strA,const std::string strB 
 
 Utilities::stringOut Utilities::indentString( int depth ) {
 	std::string indent = "";
-	for( int i = 0; i<depth; i++ ) indent += " ";
+	for( int i = 0; i<depth; i++ ) indent += "  ";
 	return indent;
 }
 
