@@ -66,12 +66,14 @@ std::list<IXmlElem *> &XmlTaggedElem::getChildren() {
 	return _children;
 }
 
-void XmlTaggedElem::addChild( IXmlElem* xmlTag ) {
+IXmlElem* XmlTaggedElem::addChild( IXmlElem* xmlTag ) {
 	_children.push_back( xmlTag );
+	return xmlTag;
 }
 
-void XmlTaggedElem::removeChild( IXmlElem* xmlTag ) {
+IXmlElem* XmlTaggedElem::removeChild( IXmlElem* xmlTag ) {
 	_children.remove( xmlTag );
+	return this;
 }
 
 void XmlTaggedElem::toString( int depth,std::string& xmlStr ) {

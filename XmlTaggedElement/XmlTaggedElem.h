@@ -25,8 +25,8 @@ class XmlTaggedElem : public  IXmlElem {
 	void setContent( const xmlTagC& content ) { _content = content; }
 
 	std::list<IXmlElem *> &getChildren();
-	void addChild( IXmlElem* xmlTag );
-	void removeChild( IXmlElem* xmlTag );
+	IXmlElem* addChild( IXmlElem* xmlTag );
+	IXmlElem* removeChild( IXmlElem* xmlTag );
 
 	void toString( int depth,std::string& xmlStr );
 

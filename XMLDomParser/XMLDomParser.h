@@ -28,7 +28,7 @@ class XmlDomParser {
 	bool isOpenTag( xmlTokenVector tokVector );
 	bool isClosedTag( xmlTokenVector tokVector );
 	void addtoXml( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc );
-	XmlString createName( xmlTokenVector tokVector);
+	XmlString createName( xmlTokenVector tokVector, int initElem);
 	void handleOpenTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc );
 	void handleCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc );
 	void handleSelfCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc );

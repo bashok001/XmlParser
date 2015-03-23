@@ -92,7 +92,7 @@ bool XmlDomParser::isSelfClosingElem( xmlTokenVector tokVector ) {
 
 IXmlElem* XmlDomParser::makeProcElement( xmlTokenVector tokVector ) {
 	if( XmlProcElem* xmlProcElement = dynamic_cast< XmlProcElem* > ( XmlPartsFactory::getXmlElement( 1 ) ) ) {
-		xmlProcElement->setName( createName(tokVector) );
+		xmlProcElement->setName( createName(tokVector,2) );
 		for( int i = getIndex(tokVector,"=")-1; i < tokVector.size() - 2; i++ ) {
 			ITagAttr* xmlAttribute = new XmlAttr();
 			XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
@@ -136,8 +136,8 @@ void XmlDomParser::addtoXml( std::stack < IXmlElem* >& xmlElemStack,std::vector<
 
 void XmlDomParser::handleOpenTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc ) {
 	if( XmlTaggedElem* xmlTaggedElement = dynamic_cast< XmlTaggedElem* > ( XmlPartsFactory::getXmlElement( 3 ) ) ) {
-		xmlTaggedElement->setName( createName( tokens ) );
-		for( int i = 2; i < tokens.size() - 1; i++ ) {
+		xmlTaggedElement->setName( createName( tokens,1 ) );
+		for( int i = getIndex( tokens,"=" ) - 1; i < tokens.size() - 1; i++ ) {
 			ITagAttr* xmlAttribute = new XmlAttr();
 			XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
 			xmlAttr->setName( tokens.at( i ) );
@@ -172,8 +172,8 @@ void XmlDomParser::handleCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::v
 
 void XmlDomParser::handleSelfCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc ) {
 	if( XmlTaggedElem* xmlTaggedElement = dynamic_cast< XmlTaggedElem* > ( XmlPartsFactory::getXmlElement( 3 ) ) ) {
-		xmlTaggedElement->setName( tokens.at( 1 ) );
-		for( int i = 2; i < tokens.size() - 2; i++ ) {
+		xmlTaggedElement->setName( createName( tokens,1 ) );
+		for( int i = getIndex( tokens,"=" )-1; i < tokens.size() - 2; i++ ) {
 			ITagAttr* xmlAttribute = new XmlAttr();
 			XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
 			xmlAttr->setName( tokens.at( i ) );
@@ -201,11 +201,16 @@ void XmlDomParser::handleSelfCloseTag( std::stack < IXmlElem* >& xmlElemStack,st
 		
 }
 
-XmlDomParser::XmlString XmlDomParser::createName( xmlTokenVector tokVector ) {
+XmlDomParser::XmlString XmlDomParser::createName( xmlTokenVector tokVector, int initElem ) {
 	std::string tagName;
 	int index = getIndex( tokVector,"=" );
 	if( index != std::numeric_limits<int>::max() ) {
-		for( int i = 2; i < index-1; i++ ) {
+		for( int i = initElem; i < index-1; i++ ) {
+			tagName += tokVector[ i ];
+		}
+		return tagName;
+	} else {
+		for( int i = initElem; i < tokVector.size()-1; i++ ) {
 			tagName += tokVector[ i ];
 		}
 		return tagName;

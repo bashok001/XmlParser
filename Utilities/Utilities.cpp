@@ -58,6 +58,9 @@ int main() {
 	std::cout << "\n" << utils->toLower( ab ) << "\n";
 	std::string bc = "ashOK BOM";
 	std::cout << utils->equalsIgnoreCase( ab,bc ) << "\n";
+	std::cout << utils->indentString( 1 ) << "x\n";
+	std::cout << utils->indentString( 2 ) << "x\n";
+	std::cout << utils->indentString( 3 ) << "x\n";
 }
 
 #endif
