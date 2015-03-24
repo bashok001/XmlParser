@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Utilities\Utilities.cpp" />
     <ClCompile Include="XmlDoc.cpp" />
   </ItemGroup>
   <ItemGroup>

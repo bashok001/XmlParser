@@ -125,9 +125,12 @@ std::string XmlDoc::toString( int depth ) {
 #ifdef TEST_XMLDOC
 
 int main(){
-
-	std::cout << "Working";
-
+	std::cout << "Working\n";
+	XmlDoc xmldoc;
+	std::cout << xmldoc.isValid() << "\n";
+	xmldoc.setValid();
+	std::cout << xmldoc.isValid() << "\n";
+	std::cout << xmldoc.toString(0);
 }
 
 #endif

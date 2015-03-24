@@ -67,13 +67,18 @@ std::list<IXmlElem *> &XmlTaggedElem::getChildren() {
 }
 
 bool XmlTaggedElem::addChild( IXmlElem* xmlTag ) {
-	_children.push_back( xmlTag );
-	return xmlTag;
+	if( dynamic_cast< XmlTaggedElem* > ( xmlTag ) ) {
+		_children.push_back( xmlTag );
+		return true;
+	}
+	return false;
 }
 
 bool XmlTaggedElem::removeChild( IXmlElem* xmlTag ) {
-	_children.remove( xmlTag );
-	return this;
+	bool found = ( std::find( _children.begin(),_children.end(),xmlTag ) != _children.end() );
+	if(found)
+		_children.remove( xmlTag );
+	return found;
 }
 
 XmlTaggedElem::xmlTagC XmlTaggedElem::tagString() {
@@ -89,14 +94,12 @@ XmlTaggedElem::xmlTagC XmlTaggedElem::tagString() {
 
 void XmlTaggedElem::toString( int depth,std::string& xmlStr ) {
 	std::string indentation = _util->indentString( depth );
-
 	xmlStr.append( indentation+"<" + this->getName() + " " );
 	std::vector<ITagAttr *> attrs = this->getAllAttributes();
 	for( auto attr : attrs ) {
 		xmlStr.append( attr->toString() );
 	}
-	xmlStr.append( ">" );
-	
+	xmlStr.append( ">" );	
 	xmlStr.append(indentation+this->getContent() );
 	std::list<IXmlElem *> childTag=this->getChildren();
 	auto iter = childTag.begin();
@@ -106,8 +109,7 @@ void XmlTaggedElem::toString( int depth,std::string& xmlStr ) {
 		child->toString( depth + 1, xmlStr );
 		iter++;
 	}
-	xmlStr.append( "\n" );
-	
+	xmlStr.append( "\n" );	
 	xmlStr.append( indentation+"</"+this->getName()+">" );
 }
 
