@@ -43,6 +43,18 @@ XmlProcElem::xmlTagC XmlProcElem::getAttributeValue( const xmlTagC& name ) {
 	return "";
 }
 
+XmlProcElem::xmlTagC XmlProcElem::tagString() {
+	std::string tagString;
+	tagString.append( "<?" );
+	tagString.append( _name );
+	for( auto attr : _attributes ) {
+		tagString.append( attr->toString() );
+	}
+	tagString.append( " ?>" );
+
+	return tagString;
+}
+
 void XmlProcElem::toString( int depth,std::string& xmlStr ) {
 	xmlStr.append( _util->indentString( depth ) );
 	xmlStr.append( "<?" );

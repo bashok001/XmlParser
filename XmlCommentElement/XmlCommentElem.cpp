@@ -24,6 +24,13 @@ void XmlCommentElem::toString( int depth,std::string& xmlStr ) {
 	xmlStr.append( " -->" );
 }
 
+XmlCommentElem::xmlTagC XmlCommentElem::tagString() {
+	std::string tagString;
+	tagString.append( "<!-- " );
+	tagString.append( _content );
+	tagString.append( " -->" );
+	return tagString;
+}
 
 #ifdef TEST_XMLCOMMENTELEM
 int main() {

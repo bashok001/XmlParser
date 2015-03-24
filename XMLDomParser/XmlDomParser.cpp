@@ -179,6 +179,9 @@ void XmlDomParser::handleSelfCloseTag( std::stack < IXmlElem* >& xmlElemStack,st
 			xmlAttr->setName( tokens.at( i ) );
 			i = i + 2;
 			xmlAttr->setValue( tokens.at( i ) );
+			if( _util->equalsIgnoreCase( xmlAttr->getName(),"tagid" ) ) {
+				xmlTaggedElement->setIdAttributeValue( xmlAttr->getValue() );
+			}
 			xmlTaggedElement->addAttribute( xmlAttr );
 		}
 		if( xmlElemStack.size() > 0 ) {
@@ -235,19 +238,41 @@ int main() {
 								<!-- Operating Systems -->\
 								<!-- Microsoft -->\
 								<OSes>\
-								<OS name=\"Linux\" />\
+								<OS name=\"Linux\" tagid = \"gem\"/>\
 								<OS name=\"Microsoft-Windows-8.1\">\
 								<SetupLanguage>\
 								<UILang tagid=\"ui\">en-IN</UILang>\
-								<ShowUI>OnError</ShowUI>\
+								<ShowUI tagid=\"ui\">OnError</ShowUI>\
 								</SetupLanguage>\
 								<SysLocale>en-US</SysLocale>\
-								<UserLocale>en-IN</UserLocale>\
+								<UserLocale tagid=\"ui\">en-IN</UserLocale>\
 								</OS>\
 								</OSes>" );
 	XmlDomParser xdom( xmldata );
 	std::cout<<xdom.getXmlDoc()->toString( 0 );
-
+	std::string output;
+	auto x = xdom.getXmlDoc()->findElementbyTagId( "\"gem\"" );
+	std::cout << x->tagString() << std::endl << std::endl << std::endl;
+	if( x == NULL ) {
+		std::cout << "NULL POINTER." << std::endl;
+	} else {
+		x->toString( 0,output );
+		std::cout << output << std::endl;
+	}
+	std::string outputs;
+	std::vector<IXmlElem*> xs = xdom.getXmlDoc()->findElementsbyTagName( "SetupLanguage" );
+	std::cout << xs.size() << "\n\n";
+	for( auto a : xs )
+		std::cout << a->tagString() << std::endl << std::endl << std::endl;
+	if( xs.size() == 0) {
+		std::cout << "EMPTY VECTOR." << std::endl;
+	} else {
+		for( auto a : xs ) {
+			a->toString( 0,outputs );
+			outputs.append("\n\n");
+		}
+		std::cout << outputs << std::endl;
+	}
 }
 
 #endif

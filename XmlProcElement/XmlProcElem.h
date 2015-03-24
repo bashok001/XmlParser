@@ -24,11 +24,12 @@ class XmlProcElem : public  IXmlElem {
 	std::vector<ITagAttr *> &getAllAttributes();
 
 	void toString( int depth,std::string& xmlStr );
+	xmlTagC tagString();
 
 	private:
 	std::list<IXmlElem *> &getChildren() { std::list<IXmlElem *> *empty = new std::list<IXmlElem *>;  return *empty; };
-	virtual IXmlElem* addChild( IXmlElem* xmlTag ) { return NULL; }
-	virtual IXmlElem* removeChild( IXmlElem* xmlTag ) { return NULL; }
+	virtual bool addChild( IXmlElem* xmlTag ) { return false; }
+	virtual bool removeChild( IXmlElem* xmlTag ) { return false; }
 
 	xmlTagC	_name;
 	xmlTagC _content;

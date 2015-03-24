@@ -25,10 +25,11 @@ class XmlTaggedElem : public  IXmlElem {
 	void setContent( const xmlTagC& content ) { _content = content; }
 
 	std::list<IXmlElem *> &getChildren();
-	IXmlElem* addChild( IXmlElem* xmlTag );
-	IXmlElem* removeChild( IXmlElem* xmlTag );
+	bool addChild( IXmlElem* xmlTag );
+	bool removeChild( IXmlElem* xmlTag );
 
 	void toString( int depth,std::string& xmlStr );
+	xmlTagC tagString();
 
 	private:
 	xmlTagC	_name;

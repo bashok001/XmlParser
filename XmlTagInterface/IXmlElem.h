@@ -20,11 +20,11 @@ class IXmlElem {
 	virtual xmlTagC getAttributeValue( const xmlTagC& name )=0;
 
 	virtual std::list<IXmlElem *> &getChildren()=0;
-	virtual IXmlElem* addChild( IXmlElem* xmlTag ) = 0;
-	virtual IXmlElem* removeChild( IXmlElem* xmlTag ) = 0;
+	virtual bool addChild( IXmlElem* xmlTag ) = 0;
+	virtual bool removeChild( IXmlElem* xmlTag ) = 0;
 	//End
 	virtual void toString(int depth, std::string& xmlStr) = 0;
-
+	virtual xmlTagC tagString() = 0;
 	xmlTagC getIdAttribute() { return _identityAttributeValue; };
 	void setIdAttributeValue( const xmlTagC& idValue ) { _identityAttributeValue = idValue; };
 

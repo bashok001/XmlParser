@@ -36,6 +36,8 @@ int main(){
 	</OS>" );
 	InputParser inputP(xmldata);
 	std::cout << inputP.getParsedInput();
+
+	
 	
 	std::ifstream in("../TestFolder/test.xml");
 	InputParser inputP1( in );

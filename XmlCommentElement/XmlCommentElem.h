@@ -13,6 +13,7 @@ class XmlCommentElem : public  IXmlElem {
 	xmlTagC &getContent();
 	void setContent( const xmlTagC& comment ) { _content = comment; };
 	void toString( int depth,std::string& xmlStr );
+	xmlTagC tagString();
 
 	private:
 	xmlTagC _content;
@@ -23,8 +24,8 @@ class XmlCommentElem : public  IXmlElem {
 	std::list<IXmlElem *> &getChildren() { std::list<IXmlElem *> *empty = new std::list<IXmlElem *>;  return *empty; }
 	IXmlElem::xmlTagC &getName() { return _content; }
 	IXmlElem::xmlTagC getAttributeValue( const xmlTagC& name ) { return ""; }
-	IXmlElem* addChild( IXmlElem* xmlTag ) { return NULL; }
-	IXmlElem* removeChild( IXmlElem* xmlTag ) { return NULL; }
+	bool addChild( IXmlElem* xmlTag ) { return false; }
+	bool removeChild( IXmlElem* xmlTag ) { return false; }
 };
 
 #endif
