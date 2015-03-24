@@ -79,6 +79,7 @@
     <ClInclude Include="XMLDomParser.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Display\Display.cpp" />
     <ClCompile Include="..\Tokenizer\Tokenizer.cpp" />
     <ClCompile Include="..\Utilities\Utilities.cpp" />
     <ClCompile Include="..\XmlCommentElement\XmlCommentElem.cpp" />

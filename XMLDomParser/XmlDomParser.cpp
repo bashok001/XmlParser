@@ -1,5 +1,16 @@
+//*************************************************************************//
+// XmlDomParser.cpp - Provides operations wrapper on FileSystem in formats    //
+//					needed by this app                                     //
+// ver 1.0                                                                 //
+// ----------------------------------------------------------------------- //
+// copyleft © Ashok Bommisetti, 2015                                       //
+// No guarantees on anything; But free to modify, copy and distribute      //
+// ----------------------------------------------------------------------- //
+// Author:      Ashok Bommisetti							               //
+// First Published (mm-dd-yyyy): 03-24-2015 			                   //
+//*************************************************************************//
 #include "XMLDomParser.h"
-
+#include "../Display/Display.h"
 #include "../Tokenizer/Tokenizer.h"
 #include "../XmlTokenizer/XmlTokenizer.h"
 #include "../XmlProcElement/XmlProcElem.h"
@@ -239,7 +250,7 @@ int main() {
 								<!-- Microsoft -->\
 								<OSes>\
 								<OS name=\"Linux\" tagid = \"gem\"/>\
-								<OS name=\"Microsoft-Windows-8.1\">\
+								<OS name=\"Microsoft-Windows-8.1\" tagid = \"gem\">\
 								<SetupLanguage>\
 								<UILang tagid=\"ui\">en-IN</UILang>\
 								<ShowUI tagid=\"ui\">OnError</ShowUI>\
@@ -250,6 +261,8 @@ int main() {
 								</OSes>" );
 	XmlDomParser xdom( xmldata );
 	std::cout<<xdom.getXmlDoc()->toString( 0 );
+	Display* dip = new Display();
+	dip->writeToFile( "../TestFolder/test.dat",xdom.getXmlDoc()->toString( 0 ) );
 	std::string output;
 	auto x = xdom.getXmlDoc()->findElementbyTagId( "\"gem\"" );
 	std::cout << x->tagString() << std::endl << std::endl << std::endl;
@@ -260,7 +273,7 @@ int main() {
 		std::cout << output << std::endl;
 	}
 	std::string outputs;
-	std::vector<IXmlElem*> xs = xdom.getXmlDoc()->findElementsbyTagName( "SetupLanguage" );
+	std::vector<IXmlElem*> xs = xdom.getXmlDoc()->findElementsbyTagName( "OSEs" );
 	std::cout << xs.size() << "\n\n";
 	for( auto a : xs )
 		std::cout << a->tagString() << std::endl << std::endl << std::endl;

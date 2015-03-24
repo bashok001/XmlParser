@@ -1,3 +1,14 @@
+//*************************************************************************//
+// XmlTaggedElem.cpp - Provides operations wrapper on FileSystem in formats    //
+//					needed by this app                                     //
+// ver 1.0                                                                 //
+// ----------------------------------------------------------------------- //
+// copyleft © Ashok Bommisetti, 2015                                       //
+// No guarantees on anything; But free to modify, copy and distribute      //
+// ----------------------------------------------------------------------- //
+// Author:      Ashok Bommisetti							               //
+// First Published (mm-dd-yyyy): 03-24-2015 			                   //
+//*************************************************************************//
 #include "XmlTaggedElem.h"
 #include "../XmlTagAttribute/XmlAttr.h"
 
@@ -10,7 +21,77 @@ XmlTaggedElem::XmlTaggedElem() {
 }
 
 XmlTaggedElem::~XmlTaggedElem() {
+	_name.clear();
+	_content.clear();
 	delete _util;
+}
+
+XmlTaggedElem::XmlTaggedElem( XmlTaggedElem& xmlTagElem ) {
+	_name = xmlTagElem._name;
+	_content = xmlTagElem._content;
+	_attributes = xmlTagElem._attributes;
+
+	for( auto attr : xmlTagElem._attributes ) {
+		ITagAttr* newAttr = new XmlAttr();
+		newAttr = attr;
+		_attributes.push_back( newAttr );
+	}
+
+	for( auto child : xmlTagElem._children ) {
+		IXmlElem* newXmlElem = new XmlTaggedElem();
+		newXmlElem = child;
+		_children.push_back( newXmlElem );
+	}
+
+	_children = xmlTagElem._children;
+	_util = new Utilities();
+	
+}
+
+XmlTaggedElem& XmlTaggedElem::operator=( XmlTaggedElem& xmlTaggedElem ) {
+	_name = xmlTaggedElem._name;
+	_content = xmlTaggedElem._content;
+
+	for( auto attr : xmlTaggedElem._attributes ) {
+		ITagAttr* newAttr = new XmlAttr();
+		newAttr = attr;
+		_attributes.push_back( newAttr );
+	}
+
+	for( auto child : xmlTaggedElem._children ) {
+		IXmlElem* newXmlElem = new XmlTaggedElem();
+		newXmlElem = child;
+		_children.push_back( newXmlElem );
+	}
+
+	_util = new Utilities;
+
+	return *this;
+}
+
+XmlTaggedElem& XmlTaggedElem::operator=( XmlTaggedElem&& xmlTaggedElem ) {
+	if( this != &xmlTaggedElem ) {
+		_name = xmlTaggedElem._name;
+		_content = xmlTaggedElem._content;
+		for( auto attr : xmlTaggedElem._attributes ) {
+			ITagAttr* newAttr = new XmlAttr();
+			newAttr = attr;
+			_attributes.push_back( newAttr );
+		}
+		for( auto child : xmlTaggedElem._children ) {
+			IXmlElem* newXmlElem = new XmlTaggedElem();
+			newXmlElem = child;
+			_children.push_back( newXmlElem );
+		}
+		_util = new Utilities;
+		xmlTaggedElem._name.clear();
+		xmlTaggedElem._content.clear();
+		
+		delete xmlTaggedElem._util;
+		delete &xmlTaggedElem;
+	}
+
+	return *this;
 }
 
 bool XmlTaggedElem::hasContent() {

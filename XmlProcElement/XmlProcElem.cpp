@@ -1,5 +1,16 @@
+//*************************************************************************//
+// XmlProcElem.cpp - Provides operations wrapper on FileSystem in formats    //
+//					needed by this app                                     //
+// ver 1.0                                                                 //
+// ----------------------------------------------------------------------- //
+// copyleft © Ashok Bommisetti, 2015                                       //
+// No guarantees on anything; But free to modify, copy and distribute      //
+// ----------------------------------------------------------------------- //
+// Author:      Ashok Bommisetti							               //
+// First Published (mm-dd-yyyy): 03-24-2015 			                   //
+//*************************************************************************//
 #include "XmlProcElem.h"
-
+#include "../XmlTagAttribute/XmlAttr.h"
 XmlProcElem::XmlProcElem() {
 	_name="";
 	_content="";
@@ -9,6 +20,50 @@ XmlProcElem::XmlProcElem() {
 
 XmlProcElem::~XmlProcElem() {
 	delete _util;
+	_name.clear();
+	_content.clear();
+}
+
+XmlProcElem& XmlProcElem::operator=( XmlProcElem& xmlProcElem ) {
+	_name = xmlProcElem._name;
+	_content = xmlProcElem._content;
+	_util = new Utilities();
+	for( auto attr : xmlProcElem._attributes ) {
+		ITagAttr* newAttr = new XmlAttr();
+		newAttr = attr;
+		_attributes.push_back( newAttr );
+	}
+	return *this;
+}
+
+XmlProcElem& XmlProcElem::operator=( XmlProcElem&& xmlProcElem ) {
+	if( this != &xmlProcElem ) {
+		_util = new Utilities();
+		_name = xmlProcElem._name;
+		_content = xmlProcElem._content;
+		for( auto attr : xmlProcElem._attributes ) {
+			ITagAttr* newAttr = new XmlAttr();
+			newAttr = attr;
+			_attributes.push_back( newAttr );
+		}
+		
+		delete xmlProcElem._util;
+		xmlProcElem._name.clear();
+		xmlProcElem._content.clear();
+		delete &xmlProcElem;
+	}
+	return *this;
+}
+
+XmlProcElem::XmlProcElem(XmlProcElem& xmlProcElement) {
+	_name = xmlProcElement._name;
+	_content = xmlProcElement._content;	
+	for( auto attr : xmlProcElement._attributes ) {
+		ITagAttr* newAttr = new XmlAttr();
+		newAttr = attr;
+		_attributes.push_back( newAttr );
+	}
+	_util = new Utilities();
 }
 
 bool XmlProcElem::hasContent() {

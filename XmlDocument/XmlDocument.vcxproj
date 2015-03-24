@@ -77,6 +77,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Utilities\Utilities.cpp" />
+    <ClCompile Include="..\XmlCommentElement\XmlCommentElem.cpp" />
+    <ClCompile Include="..\XmlProcElement\XmlProcElem.cpp" />
+    <ClCompile Include="..\XmlTagAttribute\XmlAttr.cpp" />
+    <ClCompile Include="..\XmlTaggedElement\XmlTaggedElem.cpp" />
     <ClCompile Include="XmlDoc.cpp" />
   </ItemGroup>
   <ItemGroup>

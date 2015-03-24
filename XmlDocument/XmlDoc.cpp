@@ -1,5 +1,19 @@
+//*************************************************************************//
+// XmlDoc.cpp - Provides operations wrapper on FileSystem in formats       //
+//					needed by this app                                     //
+// ver 1.0                                                                 //
+// ----------------------------------------------------------------------- //
+// copyleft © Ashok Bommisetti, 2015                                      //
+// No guarantees on anything; But free to modify, copy and distribute      //
+// ----------------------------------------------------------------------- //
+// Author:      Ashok Bommisetti							               //
+// First Published (mm-dd-yyyy): 03-24-2015 			                   //
+//*************************************************************************//
 #include "XmlDoc.h"
 #include <iostream>
+#include "../XmlProcElement/XmlProcElem.h"
+#include "../XmlCommentElement/XmlCommentElem.h"
+#include "../XmlTaggedElement/XmlTaggedElem.h"
 
 XmlDoc::XmlDoc() {
 	_docRoot = NULL;
@@ -10,7 +24,89 @@ XmlDoc::XmlDoc() {
 	_valid = false;
 }
 
+XmlDoc& XmlDoc::operator=( XmlDoc& xmlDoc ) {
+	_docRoot = xmlDoc._docRoot;
+	for( auto proc : xmlDoc._procElem ) {
+		IXmlElem* newProc = new XmlProcElem();
+		newProc = proc;
+		_procElem.push_back( newProc );
+	}
+
+	for( auto prologElem : xmlDoc._prologue ) {
+		IXmlElem* newProlog = new XmlCommentElem();
+		newProlog = prologElem;
+		_prologue.push_back( newProlog );
+	}
+
+	for( auto epilogElem : xmlDoc._epilogue ) {
+		IXmlElem* newEpilog = new XmlCommentElem();
+		newEpilog = epilogElem;
+		_epilogue.push_back( newEpilog );
+	}
+	_util = new Utilities();
+	_valid = xmlDoc._valid;
+	return *this;
+}
+
+XmlDoc& XmlDoc::operator=( XmlDoc&& xmlDoc ) {
+	if( this != &xmlDoc ) {
+		_docRoot = xmlDoc._docRoot;
+		for( auto proc : xmlDoc._procElem ) {
+			IXmlElem* newProc = new XmlProcElem();
+			newProc = proc;
+			_procElem.push_back( newProc );
+		}
+
+		for( auto prologElem : xmlDoc._prologue ) {
+			IXmlElem* newProlog = new XmlCommentElem();
+			newProlog = prologElem;
+			_prologue.push_back( newProlog );
+		}
+
+		for( auto epilogElem : xmlDoc._epilogue ) {
+			IXmlElem* newEpilog = new XmlCommentElem();
+			newEpilog = epilogElem;
+			_epilogue.push_back( newEpilog );
+		}
+		_util = new Utilities();
+		_valid = xmlDoc._valid;
+
+		xmlDoc._valid = false;
+		delete xmlDoc._docRoot;
+		delete xmlDoc._util;
+		delete &xmlDoc;
+	}
+
+	return *this;
+}
+
+
+XmlDoc::XmlDoc( XmlDoc& xmlDoc ) {
+	_docRoot = xmlDoc._docRoot;
+	for( auto proc : xmlDoc._procElem ) {
+		IXmlElem* newProc = new XmlProcElem();
+		newProc = proc;
+		_procElem.push_back( newProc );
+	}
+
+	for( auto prologElem : xmlDoc._prologue ) {
+		IXmlElem* newProlog = new XmlCommentElem();
+		newProlog = prologElem;
+		_prologue.push_back( newProlog );
+	}
+
+	for( auto epilogElem : xmlDoc._epilogue ) {
+		IXmlElem* newEpilog = new XmlCommentElem();
+		newEpilog = epilogElem;
+		_epilogue.push_back( newEpilog );
+	}
+	_util = new Utilities();
+	_valid = xmlDoc._valid;	
+}
+
 XmlDoc::~XmlDoc() {
+	_valid = false;
+	delete _docRoot;
 	delete _util;
 }
 
@@ -129,8 +225,13 @@ int main(){
 	XmlDoc xmldoc;
 	std::cout << xmldoc.isValid() << "\n";
 	xmldoc.setValid();
+
+	IXmlElem* docroot = new XmlTaggedElem();
+	
+	xmldoc.setDocRoot( docroot );
+
 	std::cout << xmldoc.isValid() << "\n";
-	std::cout << xmldoc.toString(0);
+	std::cout << xmldoc.toString(0) << "\n ************* \n";
 }
 
 #endif
