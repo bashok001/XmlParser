@@ -10,10 +10,13 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IXmlDocument.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3B35A8C5-A1D9-438D-AE21-7BE2134FA02E}</ProjectGuid>
+    <ProjectGuid>{149322E4-0CB6-43CC-AD00-B702EB0ECCF9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>XMLFactory</RootNamespace>
+    <RootNamespace>XmlDocInterface</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -51,7 +54,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);TEST_XMLPARTSFACTORY;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -75,17 +78,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="XmlPartsFactory.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Utilities\Utilities.cpp" />
-    <ClCompile Include="..\XmlCommentElement\XmlCommentElem.cpp" />
-    <ClCompile Include="..\XmlProcElement\XmlProcElem.cpp" />
-    <ClCompile Include="..\XmlTagAttribute\XmlAttr.cpp" />
-    <ClCompile Include="..\XmlTaggedElement\XmlTaggedElem.cpp" />
-    <ClCompile Include="XmlPartsFactory.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
