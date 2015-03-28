@@ -1,3 +1,13 @@
+//*************************************************************************//
+// XmlPartsFactory.cpp - Factory that creates elements                       //
+// ver 1.0                                                                 //
+// ----------------------------------------------------------------------- //
+// copyleft © Ashok Bommisetti, 2015                                       //
+// No guarantees on anything; But free to modify, copy and distribute      //
+// ----------------------------------------------------------------------- //
+// Author:      Ashok Bommisetti							               //
+// First Published (mm-dd-yyyy): 03-24-2015 			                   //
+//*************************************************************************//
 #include "XmlPartsFactory.h"
 #include "../XmlCommentElement/XmlCommentElem.h"
 #include "../XmlProcElement/XmlProcElem.h"

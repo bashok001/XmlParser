@@ -1,16 +1,113 @@
+//*************************************************************************//
+// XmlTaggedElem.cpp - XML Tagged element                                     //
+// ver 1.0                                                                 //
+// ----------------------------------------------------------------------- //
+// copyleft © Ashok Bommisetti, 2015                                       //
+// No guarantees on anything; But free to modify, copy and distribute      //
+// ----------------------------------------------------------------------- //
+// Author:      Ashok Bommisetti							               //
+// First Published (mm-dd-yyyy): 03-24-2015 			                   //
+//*************************************************************************//
 #include "XmlTaggedElem.h"
 #include "../XmlTagAttribute/XmlAttr.h"
-
+#include <iostream>
 XmlTaggedElem::XmlTaggedElem() {
 	_name = "";
 	_content = "";
-	_children = std::list<IXmlElem *>( {} );
+	_children = std::vector<IXmlElem *>( {} );
 	_attributes = std::vector<ITagAttr *>( {} );
 	_util = new Utilities;
 }
 
 XmlTaggedElem::~XmlTaggedElem() {
+	_name.clear();
+	_content.clear();
 	delete _util;
+}
+
+XmlTaggedElem::XmlTaggedElem( XmlTaggedElem& xmlTagElem ) {
+	_name = xmlTagElem._name;
+	_content = xmlTagElem._content;
+	for( auto attr : xmlTagElem._attributes ) {
+		ITagAttr* newAttr = new XmlAttr();
+		newAttr = attr;
+		_attributes.push_back( newAttr );
+	}
+	for( auto child : xmlTagElem._children ) {
+		IXmlElem* newXmlElem = new XmlTaggedElem();
+		newXmlElem = child;
+		_children.push_back( newXmlElem );
+	}
+	_util = new Utilities();
+}
+
+XmlTaggedElem& XmlTaggedElem::operator=( XmlTaggedElem& xmlTaggedElem ) {
+	_name = xmlTaggedElem._name;
+	_content = xmlTaggedElem._content;
+
+	for( auto attr : xmlTaggedElem._attributes ) {
+		ITagAttr* newAttr = new XmlAttr();
+		newAttr = attr;
+		_attributes.push_back( newAttr );
+	}
+
+	for( auto child : xmlTaggedElem._children ) {
+		IXmlElem* newXmlElem = new XmlTaggedElem();
+		newXmlElem = child;
+		_children.push_back( newXmlElem );
+	}
+
+	_util = new Utilities;
+
+	return *this;
+}
+
+XmlTaggedElem& XmlTaggedElem::operator=( XmlTaggedElem&& xmlTaggedElem ) {
+	if( this != &xmlTaggedElem ) {
+		_name.clear();
+		_content.clear();
+		delete _util;
+		while( !_attributes.empty() ) delete _attributes.back(),_attributes.pop_back();
+		while( !_children.empty() ) delete _children.back(),_children.pop_back();
+
+		_name = xmlTaggedElem._name;
+		_content = xmlTaggedElem._content;
+		for( auto attr : xmlTaggedElem._attributes ) {
+			ITagAttr* newAttr = new XmlAttr();
+			newAttr = attr;
+			_attributes.push_back( newAttr );
+		}
+		for( auto child : xmlTaggedElem._children ) {
+			IXmlElem* newXmlElem = new XmlTaggedElem();
+			newXmlElem = child;
+			_children.push_back( newXmlElem );
+		}
+		_util = new Utilities;
+
+		xmlTaggedElem._name.clear();
+		xmlTaggedElem._content.clear();
+		xmlTaggedElem._children = std::vector<IXmlElem *>( {} );
+		xmlTaggedElem._attributes = std::vector<ITagAttr *>( {} );
+		xmlTaggedElem._util = NULL;
+
+	}
+
+	return *this;
+}
+
+
+XmlTaggedElem::XmlTaggedElem( XmlTaggedElem&& xmlTaggedElem ) {
+	_name = std::move( xmlTaggedElem._name );
+	_content = std::move( xmlTaggedElem._content );
+	_children = std::move( xmlTaggedElem._children );
+	_attributes = std::move( xmlTaggedElem._attributes );
+	_util = std::move( xmlTaggedElem._util );
+
+	xmlTaggedElem._name.clear();
+	xmlTaggedElem._content.clear();
+	xmlTaggedElem._children = std::vector<IXmlElem *>( {} );
+	xmlTaggedElem._attributes = std::vector<ITagAttr *>( {} );
+	xmlTaggedElem._util = NULL;
 }
 
 bool XmlTaggedElem::hasContent() {
@@ -42,7 +139,7 @@ ITagAttr* XmlTaggedElem::getAttribute( const xmlTagC& name ) {
 }
 
 bool XmlTaggedElem::removeAttribute( const xmlTagC& name ) {
-	auto position = std::find( _attributes.begin(),_attributes.end(), getAttribute(name));
+	auto position = std::find( _attributes.begin(),_attributes.end(),getAttribute( name ) );
 	if( position != _attributes.end() ) {
 		_attributes.erase( position );
 		return true;
@@ -62,7 +159,7 @@ std::vector<ITagAttr *> &XmlTaggedElem::getAllAttributes() {
 	return _attributes;
 }
 
-std::list<IXmlElem *> &XmlTaggedElem::getChildren() {
+std::vector<IXmlElem *> &XmlTaggedElem::getChildren() {
 	return _children;
 }
 
@@ -75,10 +172,12 @@ bool XmlTaggedElem::addChild( IXmlElem* xmlTag ) {
 }
 
 bool XmlTaggedElem::removeChild( IXmlElem* xmlTag ) {
-	bool found = ( std::find( _children.begin(),_children.end(),xmlTag ) != _children.end() );
-	if(found)
-		_children.remove( xmlTag );
-	return found;
+	auto position = std::find( _children.begin(),_children.end(),xmlTag );
+	if( position != _children.end() ) {
+		_children.erase( position );
+		return true;
+	}
+	return false;
 }
 
 XmlTaggedElem::xmlTagC XmlTaggedElem::tagString() {
@@ -94,19 +193,19 @@ XmlTaggedElem::xmlTagC XmlTaggedElem::tagString() {
 
 void XmlTaggedElem::toString( int depth,std::string& xmlStr ) {
 	std::string indentation = _util->indentString( depth );
-	xmlStr.append( indentation+"<" + this->getName() + " " );
+	xmlStr.append( indentation + "<" + this->getName() + " " );
 	std::vector<ITagAttr *> attrs = this->getAllAttributes();
 	for( auto attr : attrs ) {
 		xmlStr.append( attr->toString() );
 	}
-	xmlStr.append( ">" );	
-	xmlStr.append(indentation+this->getContent() );
-	std::list<IXmlElem *> childTag=this->getChildren();
+	xmlStr.append( ">" );
+	xmlStr.append( indentation + this->getContent() );
+	std::vector<IXmlElem *> childTag = this->getChildren();
 	auto iter = childTag.begin();
 	while( iter != childTag.end() ) {
 		IXmlElem *child = *iter;
 		xmlStr.append( "\n" );
-		child->toString( depth + 1, xmlStr );
+		child->toString( depth + 1,xmlStr );
 		iter++;
 	}
 	xmlStr.append( "\n" );	
@@ -117,6 +216,9 @@ void XmlTaggedElem::toString( int depth,std::string& xmlStr ) {
 
 #ifdef TEST_XMLTAGGEDELEM
 int main() {
-
+	XmlTaggedElem* xmlTag = new XmlTaggedElem();
+	xmlTag->setName( "Name" );
+	xmlTag->setContent( "CONTENT" );
+	std::cout << xmlTag->tagString();
 }
 #endif

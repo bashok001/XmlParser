@@ -1,5 +1,8 @@
+#ifndef FILEOUT_H
+#define FILEOUT_H
+#include <string>
 //*************************************************************************//
-// InputParser.h - Parses input provided to the project from file or string//
+// FileOut.h - Output file writer 											//
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -11,18 +14,15 @@
 /*
 * Package Operations:
 * ==================
-* This package reads input from different sources.
-
+* This package supports writing to a file
+*
 * Public Interface:
 * =================
-*	InputParser(inputStr inputString) // Constructor that sets up the value in _inputString
-*	InputParser(std::istream& inputFile ); // Constructor that sets _inputString from file
-*	~InputParser(); // Destructor
-*	inputStr getParsedInput() { return _inputString; } // return _inputString
-*
+* void writeToFile(const outputString& fileName, const outputString& output) // Writes output to file 'fileName'
+* 
 * Required Files:
 * ---------------
-*   - InputParser.h, InputParser.cpp
+*   - FileOut.h, FileOut.cpp
 *
 * Build Process:
 * --------------
@@ -32,25 +32,11 @@
 * --------------------
 * Only first version out
 */
-#ifndef INPUTPARSER_H
-#define INPUTPARSER_H
-#include <string>
-#include "../Utilities/Utilities.h"
-
-class InputParser {
-	using inputStr = std::string;
+class FileOut {
+	using outputString = std::string;
 
 	public:
-	InputParser(inputStr inputString);
-	InputParser(std::istream& inputFile );
-	~InputParser();
-	inputStr getParsedInput() { return _inputString; }
-
-	private:
-	InputParser();
-	inputStr _inputString;
-
-	protected:
-	Utilities* _utilities = new Utilities();
+	void writeToFile(const outputString& fileName, const outputString& output);
 };
+
 #endif

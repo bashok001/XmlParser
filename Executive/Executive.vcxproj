@@ -76,6 +76,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Executive.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\FileOut\FileOut.cpp" />
+    <ClCompile Include="..\InputParser\InputParser.cpp" />
+    <ClCompile Include="..\Tokenizer\Tokenizer.cpp" />
+    <ClCompile Include="..\Utilities\Utilities.cpp" />
+    <ClCompile Include="..\XmlCommentElement\XmlCommentElem.cpp" />
+    <ClCompile Include="..\XmlDocument\XmlDoc.cpp" />
+    <ClCompile Include="..\XMLDomParser\XmlDomParser.cpp" />
+    <ClCompile Include="..\XMLFactory\XmlPartsFactory.cpp" />
+    <ClCompile Include="..\XmlProcElement\XmlProcElem.cpp" />
+    <ClCompile Include="..\XmlTagAttribute\XmlAttr.cpp" />
+    <ClCompile Include="..\XmlTaggedElement\XmlTaggedElem.cpp" />
+    <ClCompile Include="..\XmlTokenizer\XmlTokenizer.cpp" />
+    <ClCompile Include="Executive.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
