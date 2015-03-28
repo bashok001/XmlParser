@@ -21,6 +21,13 @@ XmlCommentElem::XmlCommentElem( XmlCommentElem& xmlCommentElem ) {
 	_util = new Utilities();
 }
 
+XmlCommentElem::XmlCommentElem( XmlCommentElem&& xmlCommentElem ):_content("") {
+	_content = xmlCommentElem._content;
+	_util = new Utilities();
+	xmlCommentElem._content.clear();
+	xmlCommentElem._util = NULL;
+}
+
 XmlCommentElem& XmlCommentElem::operator=( XmlCommentElem& xmlCommentElem ) {
 	_content = xmlCommentElem._content;
 	_util = new Utilities();
@@ -29,11 +36,14 @@ XmlCommentElem& XmlCommentElem::operator=( XmlCommentElem& xmlCommentElem ) {
 
 XmlCommentElem& XmlCommentElem::operator=( XmlCommentElem&& xmlCommentElem ) {
 	if( this != &xmlCommentElem ) {
+		delete _util;
+		_content.clear();
+
 		_util = new Utilities();
 		_content = xmlCommentElem._content;
+		
 		xmlCommentElem._content.clear();
-		delete xmlCommentElem._util;
-		delete &xmlCommentElem;
+		xmlCommentElem._util=NULL;
 	}
 	return *this;
 }

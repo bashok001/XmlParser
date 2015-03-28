@@ -10,7 +10,7 @@
 // First Published (mm-dd-yyyy): 03-24-2015 			                   //
 //*************************************************************************//
 #include "XMLDomParser.h"
-#include "../Display/Display.h"
+#include "../FileOut/FileOut.h"
 #include "../Tokenizer/Tokenizer.h"
 #include "../XmlTokenizer/XmlTokenizer.h"
 #include "../XmlProcElement/XmlProcElem.h"
@@ -104,7 +104,7 @@ bool XmlDomParser::isSelfClosingElem( xmlTokenVector tokVector ) {
 IXmlElem* XmlDomParser::makeProcElement( xmlTokenVector tokVector ) {
 	if( XmlProcElem* xmlProcElement = dynamic_cast< XmlProcElem* > ( XmlPartsFactory::getXmlElement( 1 ) ) ) {
 		xmlProcElement->setName( createName(tokVector,2) );
-		for( int i = getIndex(tokVector,"=")-1; i < tokVector.size() - 2; i++ ) {
+		for( size_t i = getIndex(tokVector,"=")-1; i < tokVector.size() - 2; i++ ) {
 			ITagAttr* xmlAttribute = new XmlAttr();
 			XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
 			xmlAttr->setName( tokVector.at( i ) );
@@ -120,7 +120,7 @@ IXmlElem* XmlDomParser::makeProcElement( xmlTokenVector tokVector ) {
 IXmlElem* XmlDomParser::makeCommentElement( xmlTokenVector tokVector ) {
 	if( XmlCommentElem* xmlCommentElement = dynamic_cast< XmlCommentElem* > ( XmlPartsFactory::getXmlElement( 2 ) ) ) {
 		std::string comment;
-		for( int i = 3; i < tokVector.size() - 2; i++ ) {
+		for( size_t i = 3; i < tokVector.size() - 2; i++ ) {
 			comment.append( tokVector.at( i ) + " " );
 		}
 		xmlCommentElement->setContent( comment );
@@ -148,7 +148,7 @@ void XmlDomParser::addtoXml( std::stack < IXmlElem* >& xmlElemStack,std::vector<
 void XmlDomParser::handleOpenTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc ) {
 	if( XmlTaggedElem* xmlTaggedElement = dynamic_cast< XmlTaggedElem* > ( XmlPartsFactory::getXmlElement( 3 ) ) ) {
 		xmlTaggedElement->setName( createName( tokens,1 ) );
-		for( int i = getIndex( tokens,"=" ) - 1; i < tokens.size() - 1; i++ ) {
+		for( size_t i = getIndex( tokens,"=" ) - 1; i < tokens.size() - 1; i++ ) {
 			ITagAttr* xmlAttribute = new XmlAttr();
 			XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
 			xmlAttr->setName( tokens.at( i ) );
@@ -184,7 +184,7 @@ void XmlDomParser::handleCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::v
 void XmlDomParser::handleSelfCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc ) {
 	if( XmlTaggedElem* xmlTaggedElement = dynamic_cast< XmlTaggedElem* > ( XmlPartsFactory::getXmlElement( 3 ) ) ) {
 		xmlTaggedElement->setName( createName( tokens,1 ) );
-		for( int i = getIndex( tokens,"=" )-1; i < tokens.size() - 2; i++ ) {
+		for( size_t i = getIndex( tokens,"=" )-1; i < tokens.size() - 2; i++ ) {
 			ITagAttr* xmlAttribute = new XmlAttr();
 			XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
 			xmlAttr->setName( tokens.at( i ) );
@@ -224,7 +224,7 @@ XmlDomParser::XmlString XmlDomParser::createName( xmlTokenVector tokVector, int 
 		}
 		return tagName;
 	} else {
-		for( int i = initElem; i < tokVector.size()-1; i++ ) {
+		for( size_t i = initElem; i < tokVector.size()-1; i++ ) {
 			tagName += tokVector[ i ];
 		}
 		return tagName;
@@ -261,8 +261,7 @@ int main() {
 								</OSes>" );
 	XmlDomParser xdom( xmldata );
 	std::cout<<xdom.getXmlDoc()->toString( 0 );
-	Display* dip = new Display();
-	dip->writeToFile( "../TestFolder/test.dat",xdom.getXmlDoc()->toString( 0 ) );
+	
 	std::string output;
 	auto x = xdom.getXmlDoc()->findElementbyTagId( "\"gem\"" );
 	std::cout << x->tagString() << std::endl << std::endl << std::endl;

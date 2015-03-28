@@ -38,6 +38,11 @@ XmlProcElem& XmlProcElem::operator=( XmlProcElem& xmlProcElem ) {
 
 XmlProcElem& XmlProcElem::operator=( XmlProcElem&& xmlProcElem ) {
 	if( this != &xmlProcElem ) {
+		delete _util;
+		_name.clear();
+		_content.clear();
+		while( !_attributes.empty() ) delete _attributes.back(), _attributes.pop_back();
+		
 		_util = new Utilities();
 		_name = xmlProcElem._name;
 		_content = xmlProcElem._content;
@@ -45,12 +50,12 @@ XmlProcElem& XmlProcElem::operator=( XmlProcElem&& xmlProcElem ) {
 			ITagAttr* newAttr = new XmlAttr();
 			newAttr = attr;
 			_attributes.push_back( newAttr );
-		}
+		}		
 		
-		delete xmlProcElem._util;
+		xmlProcElem._util=NULL;
 		xmlProcElem._name.clear();
 		xmlProcElem._content.clear();
-		delete &xmlProcElem;
+		xmlProcElem._attributes = {};
 	}
 	return *this;
 }
@@ -64,6 +69,22 @@ XmlProcElem::XmlProcElem(XmlProcElem& xmlProcElement) {
 		_attributes.push_back( newAttr );
 	}
 	_util = new Utilities();
+}
+
+XmlProcElem::XmlProcElem( XmlProcElem&& xmlProcElement ) {
+	_name = xmlProcElement._name;
+	_content = xmlProcElement._content;
+	for( auto attr : xmlProcElement._attributes ) {
+		ITagAttr* newAttr = new XmlAttr();
+		newAttr = attr;
+		_attributes.push_back( newAttr );
+	}
+	_util = new Utilities();
+
+	xmlProcElement._util = NULL;
+	xmlProcElement._attributes = {};
+	xmlProcElement._name.clear();
+	xmlProcElement._content.clear();
 }
 
 bool XmlProcElem::hasContent() {

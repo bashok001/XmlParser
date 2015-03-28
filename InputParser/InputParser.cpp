@@ -22,9 +22,14 @@ InputParser::InputParser( InputParser::inputStr input ) {
 
 InputParser::InputParser( std::istream& inputFile ) {
 	std::string strStore,trimStore;
-	while( !inputFile.eof() ) {
-		std::getline( inputFile,strStore );
-		trimStore += _utilities->trim( strStore );
+	if( inputFile.good() ) {
+		while( !inputFile.eof() ) {
+			std::getline( inputFile,strStore );
+			trimStore += _utilities->trim( strStore );
+		}
+	} else {
+		std::cout << "\nFile is not accessible at given path. Check arguments. Exiting the program.\n";
+		exit( -1 );
 	}
 	_inputString = trimStore;
 }
@@ -36,21 +41,21 @@ InputParser::~InputParser() {
 
 #ifdef TEST_INPUTPARSER
 
-int main(){
+int main() {
 	static std::string xmldata( "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\
-	<OS name=\"Microsoft-Windows-8.1\">\
-		<SetupLanguage>\
-			<UILang>en-IN</UILang>\
-			<ShowUI>OnError</ShowUI>\
-		</SetupLanguage>\
-		<SysLocale>en-US</SysLocale>\
-		<UserLocale>en-IN</UserLocale>\
-	</OS>" );
-	InputParser inputP(xmldata);
+									<OS name=\"Microsoft-Windows-8.1\">\
+											<SetupLanguage>\
+														<UILang>en-IN</UILang>\
+																	<ShowUI>OnError</ShowUI>\
+																			</SetupLanguage>\
+																					<SysLocale>en-US</SysLocale>\
+																							<UserLocale>en-IN</UserLocale>\
+																								</OS>" );
+	InputParser inputP( xmldata );
 	std::cout << inputP.getParsedInput();
-	std::ifstream in("../TestFolder");
+	std::ifstream in( "../TestFolder" );
 	InputParser inputP1( in );
-	std::cout << "\n\n\n"<<inputP1.getParsedInput()<<"\n";
+	std::cout << "\n\n\n" << inputP1.getParsedInput() << "\n";
 }
 
 #endif

@@ -48,6 +48,7 @@ class XmlAttr : public ITagAttr {
 	XmlAttr();
 	~XmlAttr();
 	XmlAttr(const XmlAttr& xmlAttribute );
+	XmlAttr(XmlAttr&& xmlAttribute );
 	XmlAttr& XmlAttr::operator=( XmlAttr& xmlAttribute );
 	XmlAttr& XmlAttr::operator=( XmlAttr&& xmlAttribute );
 	virtual std::string &getName();

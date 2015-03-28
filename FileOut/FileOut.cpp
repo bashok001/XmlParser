@@ -10,12 +10,12 @@
 // First Published (mm-dd-yyyy): 03-24-2015 			                   //
 //*************************************************************************//
 
-#include "Display.h"
+#include "FileOut.h"
 #include <fstream>
 #include <iostream>
 #include "../InputParser/InputParser.h"
 
-void Display::writeToFile( const outputString& fileName,const outputString& output ) {
+void FileOut::writeToFile( const outputString& fileName,const outputString& output ) {
 	std::ofstream outputFile( fileName,std::ios::trunc );
 	outputFile << output;
 	outputFile.close();
@@ -40,7 +40,7 @@ int main() {
 								</OS>\
 								</OSes>" );
 		InputParser inputP( xmldata );
-		Display* dip = new Display();
+		FileOut* dip = new FileOut();
 		dip->writeToFile( "../TestFolder/test.dat",inputP.getParsedInput() );
 }
 #endif

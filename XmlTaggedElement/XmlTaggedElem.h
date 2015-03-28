@@ -47,6 +47,7 @@ class XmlTaggedElem : public  IXmlElem {
 	XmlTaggedElem( const std::string& tagName ) :_name( tagName ) {};
 	~XmlTaggedElem();
 	XmlTaggedElem( XmlTaggedElem& xmlTagElem );
+	XmlTaggedElem( XmlTaggedElem&& oldXmlTagElem );
 	XmlTaggedElem& XmlTaggedElem::operator=( XmlTaggedElem& xmlTaggedElem );
 	XmlTaggedElem& XmlTaggedElem::operator=( XmlTaggedElem&& xmlTaggedElem );
 	bool hasAttribute( xmlTagC name );
@@ -63,7 +64,7 @@ class XmlTaggedElem : public  IXmlElem {
 	xmlTagC &getContent();
 	void setContent( const xmlTagC& content ) { _content = content; }
 
-	std::list<IXmlElem *> &getChildren();
+	std::vector<IXmlElem *> &getChildren();
 	bool addChild( IXmlElem* xmlTag );
 	bool removeChild( IXmlElem* xmlTag );
 
@@ -73,7 +74,7 @@ class XmlTaggedElem : public  IXmlElem {
 	private:
 	xmlTagC	_name;
 	xmlTagC _content;
-	std::list<IXmlElem *> _children;
+	std::vector<IXmlElem *> _children;
 	std::vector<ITagAttr *> _attributes;
 	Utilities* _util;
 };

@@ -55,7 +55,7 @@ class IXmlElem {
 	virtual std::vector<ITagAttr *> &getAllAttributes()=0;
 	virtual xmlTagC getAttributeValue( const xmlTagC& name )=0;
 
-	virtual std::list<IXmlElem *> &getChildren()=0;
+	virtual std::vector<IXmlElem *> &getChildren()=0;
 	virtual bool addChild( IXmlElem* xmlTag ) = 0;
 	virtual bool removeChild( IXmlElem* xmlTag ) = 0;
 	//End
@@ -67,7 +67,7 @@ class IXmlElem {
 	private:
 	xmlTagC	_name;
 	xmlTagC _content;
-	std::list<IXmlElem *> _children;
+	std::vector<IXmlElem *> _children;
 	std::vector<ITagAttr *> _attributes;
 	xmlTagC _identityAttributeValue;
 };

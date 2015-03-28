@@ -24,6 +24,20 @@ XmlDoc::XmlDoc() {
 	_valid = false;
 }
 
+XmlDoc::XmlDoc( XmlDoc&& oldXmlDoc ) {
+	_docRoot = std::move( oldXmlDoc._docRoot );
+	_procElem = std::move( oldXmlDoc._procElem );
+	_prologue = std::move( oldXmlDoc._prologue );
+	_epilogue = std::move( oldXmlDoc._epilogue );
+	_valid = std::move( oldXmlDoc._valid );
+	oldXmlDoc._docRoot = NULL;
+	oldXmlDoc._util = NULL;
+	oldXmlDoc._procElem = {};
+	oldXmlDoc._prologue = {};
+	oldXmlDoc._epilogue = {};
+	oldXmlDoc._valid = false;
+}
+
 XmlDoc& XmlDoc::operator=( XmlDoc& xmlDoc ) {
 	_docRoot = xmlDoc._docRoot;
 	for( auto proc : xmlDoc._procElem ) {
@@ -50,6 +64,13 @@ XmlDoc& XmlDoc::operator=( XmlDoc& xmlDoc ) {
 
 XmlDoc& XmlDoc::operator=( XmlDoc&& xmlDoc ) {
 	if( this != &xmlDoc ) {
+		delete _docRoot;
+		delete _util;
+		while( !_procElem.empty() ) delete _procElem.back(),_procElem.pop_back();
+		while( !_prologue.empty() ) delete _prologue.back(),_prologue.pop_back();
+		while( !_epilogue.empty() ) delete _epilogue.back(),_epilogue.pop_back();
+		_valid = false;
+
 		_docRoot = xmlDoc._docRoot;
 		for( auto proc : xmlDoc._procElem ) {
 			IXmlElem* newProc = new XmlProcElem();
@@ -70,11 +91,14 @@ XmlDoc& XmlDoc::operator=( XmlDoc&& xmlDoc ) {
 		}
 		_util = new Utilities();
 		_valid = xmlDoc._valid;
-
+		
+		xmlDoc._docRoot = NULL;
+		xmlDoc._util = NULL;
+		xmlDoc._procElem = {};
+		xmlDoc._prologue = {};
+		xmlDoc._epilogue = {};
 		xmlDoc._valid = false;
-		delete xmlDoc._docRoot;
-		delete xmlDoc._util;
-		delete &xmlDoc;
+
 	}
 
 	return *this;
@@ -101,13 +125,15 @@ XmlDoc::XmlDoc( XmlDoc& xmlDoc ) {
 		_epilogue.push_back( newEpilog );
 	}
 	_util = new Utilities();
-	_valid = xmlDoc._valid;	
+	_valid = xmlDoc._valid;
 }
 
 XmlDoc::~XmlDoc() {
 	_valid = false;
-	delete _docRoot;
-	delete _util;
+	/*if(_docRoot != NULL )
+		delete _docRoot;
+		if( _util != NULL )
+		delete _util;*/
 }
 
 IXmlElem *XmlDoc::getRoot() {
@@ -145,7 +171,7 @@ void XmlDoc::setEpilogue( std::list<IXmlElem*> epilogueElems ) {
 }
 
 IXmlElem* XmlDoc::findElementbyTagId( const std::string& tagIdVal ) {
-	IXmlElem* resultSet = recursiveFind( tagIdVal,_docRoot );
+	IXmlElem* resultSet = recursiveFind( "\""+tagIdVal+"\"",_docRoot );
 	return resultSet;
 }
 
@@ -155,7 +181,7 @@ IXmlElem* XmlDoc::recursiveFind( const std::string& tagIdVal,IXmlElem* elem ) {
 		result = elem;
 	}
 
-std::list<IXmlElem *> childList = elem->getChildren();
+	std::vector<IXmlElem *> childList = elem->getChildren();
 	for( auto child : childList ) {
 		if( result == NULL ) {
 			IXmlElem* tempResults = recursiveFind( tagIdVal,child );
@@ -175,7 +201,7 @@ std::vector<IXmlElem*> XmlDoc::recursiveElemsFind( const std::string& tagName,IX
 		resultVector.push_back( elem );
 	}
 
-	std::list<IXmlElem *> childList = elem->getChildren();
+	std::vector<IXmlElem *> childList = elem->getChildren();
 	for( auto child : childList ) {
 		std::vector<IXmlElem*> tempResults = recursiveElemsFind( tagName,child );
 		for( auto result : tempResults )
@@ -220,18 +246,18 @@ std::string XmlDoc::toString( int depth ) {
 
 #ifdef TEST_XMLDOC
 
-int main(){
+int main() {
 	std::cout << "Working\n";
 	XmlDoc xmldoc;
 	std::cout << xmldoc.isValid() << "\n";
 	xmldoc.setValid();
 
 	IXmlElem* docroot = new XmlTaggedElem();
-	
+
 	xmldoc.setDocRoot( docroot );
 
 	std::cout << xmldoc.isValid() << "\n";
-	std::cout << xmldoc.toString(0) << "\n ************* \n";
+	std::cout << xmldoc.toString( 0 ) << "\n ************* \n";
 }
 
 #endif

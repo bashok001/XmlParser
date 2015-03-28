@@ -50,7 +50,7 @@
     <ClCompile Include="..\XmlTagAttribute\XmlAttr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Display\Display.cpp">
+    <ClCompile Include="..\FileOut\FileOut.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

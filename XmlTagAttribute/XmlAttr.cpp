@@ -26,13 +26,21 @@ XmlAttr::XmlAttr(const XmlAttr& xmlAttr ) {
 	_value = xmlAttr._value;
 }
 
+XmlAttr::XmlAttr( XmlAttr&& xmlAttr ):_name(""),_value(""){
+	_name =std::move(xmlAttr._name);
+	_value = std::move( xmlAttr._value);
+	xmlAttr._name.clear();
+	xmlAttr._value.clear();
+}
+
 XmlAttr& XmlAttr::operator=( XmlAttr&& xmlAttribute ) {
 	if( this != &xmlAttribute ) {
+		_name.clear();
+		_value.clear();
 		_name = xmlAttribute._name;
 		_value = xmlAttribute._value;
 		xmlAttribute._name.clear();
 		xmlAttribute._value.clear();
-		delete &xmlAttribute;
 	}
 	return *this;
 }
