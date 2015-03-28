@@ -1,6 +1,5 @@
 //*************************************************************************//
-// IXmlDocument.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// IXmlDocument.h - Interface for XML Document                             //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,20 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
+* This package provides interface for XMLDocument
 *
 * Public Interface:
 * =================
-*
+*	virtual IXmlElem* getRoot() = 0;
+*	virtual std::list<IXmlElem*> getProcessingInstr() = 0;
+*	virtual std::list<IXmlElem*> getPrologue() = 0;
+*	virtual std::list<IXmlElem*> getEpilogue() = 0;
+*	virtual IXmlElem* findElementbyTagId(const std::string& tagIdVal) = 0;
+*	virtual std::vector<IXmlElem*> findElementsbyTagName( const std::string& tagIdVal ) = 0;
 *
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - IXmlDocument.h
 *
 * Build Process:
 * --------------

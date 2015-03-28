@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlCommentElem.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XmlCommentElem.h - Comment Element                                     //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,25 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
+* This package is to support creation of comment elements
 *
 * Public Interface:
 * =================
-*
+*	XmlCommentElem() //Constructor
+*	~XmlCommentElem() // Destructor
+*	XmlCommentElem( XmlCommentElem& xmlCommentElem ) // Copy Constructor
+*	XmlCommentElem( XmlCommentElem&& xmlCommentElem ) // Move Constructor
+*	XmlCommentElem& XmlCommentElem::operator=( XmlCommentElem& xmlCommentElem ); // Copy Assignment Operator
+*	XmlCommentElem& XmlCommentElem::operator=( XmlCommentElem&& xmlCommentElem ); // Move Assignment Operator
+*	bool hasContent(); // Returns true if content is present in the comments
+*	xmlTagC &getContent(); // Returns content
+*	void setContent( const xmlTagC& comment ); // Setter for _content
+*	void toString( int depth,std::string& xmlStr ); // toString() descendants 
+*	xmlTagC tagString(); // Prints the tag into string
 *
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - XmlCommentElem.h, XmlCommentElem.cpp
 *
 * Build Process:
 * --------------

@@ -1,6 +1,5 @@
 //*************************************************************************//
-// IXmlElem.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// IXmlElem.h - Xml Element interface                                     //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,27 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
+* This package provides interface that is used by all xml elements
 *
 * Public Interface:
 * =================
-*
-*
+*	virtual bool hasContent() = 0;
+*	virtual xmlTagC &getContent() = 0;
+*	virtual bool hasAttribute( xmlTagC name ) = 0;
+*	virtual xmlTagC &getName()=0;
+*	virtual std::vector<ITagAttr *> &getAllAttributes()=0;
+*	virtual xmlTagC getAttributeValue( const xmlTagC& name )=0;
+*	virtual std::vector<IXmlElem *> &getChildren()=0;
+*	virtual bool addChild( IXmlElem* xmlTag ) = 0;
+*	virtual bool removeChild( IXmlElem* xmlTag ) = 0;
+*	virtual void toString(int depth, std::string& xmlStr) = 0;
+*	virtual xmlTagC tagString() = 0;
+*	xmlTagC getIdAttribute() { return _identityAttributeValue; };
+*	void setIdAttributeValue( const xmlTagC& idValue ) { _identityAttributeValue = idValue; };
+**
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - IXmlElem.h
 *
 * Build Process:
 * --------------
@@ -46,19 +53,13 @@ class IXmlElem {
 	using xmlTagC = std::string;
 	virtual bool hasContent() = 0;
 	virtual xmlTagC &getContent() = 0;
-
-	
-	//Start
 	virtual bool hasAttribute( xmlTagC name ) = 0;
-
 	virtual xmlTagC &getName()=0;
 	virtual std::vector<ITagAttr *> &getAllAttributes()=0;
 	virtual xmlTagC getAttributeValue( const xmlTagC& name )=0;
-
 	virtual std::vector<IXmlElem *> &getChildren()=0;
 	virtual bool addChild( IXmlElem* xmlTag ) = 0;
 	virtual bool removeChild( IXmlElem* xmlTag ) = 0;
-	//End
 	virtual void toString(int depth, std::string& xmlStr) = 0;
 	virtual xmlTagC tagString() = 0;
 	xmlTagC getIdAttribute() { return _identityAttributeValue; };

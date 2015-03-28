@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlProcElem.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XmlProcElem.h - Processing Instruction Element                          //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,31 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
+* This package is to support creation of processing instruction elements
 *
 * Public Interface:
 * =================
-*
+*	XmlProcElem(); //Constructor
+*   ~XmlProcElem(); //Destructor
+*	XmlProcElem( XmlProcElem& xmlProcElement ); // Copy constructor
+*	XmlProcElem( XmlProcElem&& xmlProcElement ); // Move constructor
+*	XmlProcElem& XmlProcElem::operator=( XmlProcElem& xmlProcElem ); // Copy Assignment Operator
+*	XmlProcElem& XmlProcElem::operator=( XmlProcElem&& xmlProcElem ); // Move Assignment Operator
+*	bool hasContent(); // Return true if content is present
+*	bool hasAttribute( xmlTagC name ); // Returns true if attribute with 'name' is present
+*	xmlTagC getAttributeValue( const xmlTagC& name ); // Returns value of attribute with 'name' 
+*	xmlTagC &getName(); // Returns tag name
+*	void setName( const xmlTagC& name ) // Setter for tag name
+*	xmlTagC &getContent(); //Returns content
+*	void setContent( const xmlTagC& content ) //Setter for content
+*	void addAttribute( ITagAttr *attr ) // Push into attribute vector
+*	std::vector<ITagAttr *> &getAllAttributes(); // Return all attributes
+*	void toString( int depth,std::string& xmlStr ); //ToString() filled with descendants
+*	xmlTagC tagString(); //Returns tag as string
 *
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - XmlProcElem.h, XmlProcElem.cpp
 *
 * Build Process:
 * --------------

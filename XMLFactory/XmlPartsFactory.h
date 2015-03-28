@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlPartsFactory.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XmlPartsFactory.h - Factory that creates elements                       //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,15 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
-*
+* This provides a factory that generates concrete classes
+* 
 * Public Interface:
 * =================
-*
+* static IXmlElem *getXmlElement( int typeOfXmlElem ); // Creates various types of XML Elements based on typeOfXmlElem
 *
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - XmlPartsFactory.h, XmlPartsFactory.cpp
 *
 * Build Process:
 * --------------

@@ -1,6 +1,5 @@
 //*************************************************************************//
-// Display.cpp - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// FileOut.cpp - Output file writer 											//
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //

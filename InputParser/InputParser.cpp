@@ -1,6 +1,5 @@
 //*************************************************************************//
-// InputParser.cpp - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// InputParser.cpp - Parses input provided to the project from file or string//
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -9,7 +8,6 @@
 // Author:      Ashok Bommisetti							               //
 // First Published (mm-dd-yyyy): 03-24-2015 			                   //
 //*************************************************************************//
-
 #include "InputParser.h"
 
 #include <iostream>

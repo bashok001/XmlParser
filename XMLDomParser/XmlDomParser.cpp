@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlDomParser.cpp - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XMLDomParser.cpp - Parser that creates a XML Document from a XML String   //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -183,7 +182,11 @@ void XmlDomParser::handleCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::v
 
 void XmlDomParser::handleSelfCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc ) {
 	if( XmlTaggedElem* xmlTaggedElement = dynamic_cast< XmlTaggedElem* > ( XmlPartsFactory::getXmlElement( 3 ) ) ) {
-		xmlTaggedElement->setName( createName( tokens,1 ) );
+		std::string nameStore = createName( tokens,1 );
+		auto nameFound = nameStore.find( '/' );
+		if( nameFound != std::string::npos )
+			nameStore.erase( nameFound,1 );
+		xmlTaggedElement->setName( nameStore );
 		for( size_t i = getIndex( tokens,"=" )-1; i < tokens.size() - 2; i++ ) {
 			ITagAttr* xmlAttribute = new XmlAttr();
 			XmlAttr* xmlAttr = dynamic_cast< XmlAttr* > ( xmlAttribute );
@@ -249,6 +252,7 @@ int main() {
 								<!-- Operating Systems -->\
 								<!-- Microsoft -->\
 								<OSes>\
+								<OS name=\"xs\" />\
 								<OS name=\"Linux\" tagid = \"gem\"/>\
 								<OS name=\"Microsoft-Windows-8.1\" tagid = \"gem\">\
 								<SetupLanguage>\

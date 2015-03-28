@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlTaggedElem.cpp - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XmlTaggedElem.cpp - XML Tagged element                                     //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -11,7 +10,7 @@
 //*************************************************************************//
 #include "XmlTaggedElem.h"
 #include "../XmlTagAttribute/XmlAttr.h"
-
+#include <iostream>
 XmlTaggedElem::XmlTaggedElem() {
 	_name = "";
 	_content = "";
@@ -217,6 +216,9 @@ void XmlTaggedElem::toString( int depth,std::string& xmlStr ) {
 
 #ifdef TEST_XMLTAGGEDELEM
 int main() {
-
+	XmlTaggedElem* xmlTag = new XmlTaggedElem();
+	xmlTag->setName( "Name" );
+	xmlTag->setContent( "CONTENT" );
+	std::cout << xmlTag->tagString();
 }
 #endif

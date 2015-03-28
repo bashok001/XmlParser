@@ -2,8 +2,7 @@
 #define FILEOUT_H
 #include <string>
 //*************************************************************************//
-// Display.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// FileOut.h - Output file writer 											//
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -15,19 +14,15 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
+* This package supports writing to a file
 *
 * Public Interface:
 * =================
-*
-*
+* void writeToFile(const outputString& fileName, const outputString& output) // Writes output to file 'fileName'
+* 
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - FileOut.h, FileOut.cpp
 *
 * Build Process:
 * --------------

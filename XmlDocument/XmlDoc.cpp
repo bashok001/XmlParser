@@ -1,9 +1,8 @@
 //*************************************************************************//
-// XmlDoc.cpp - Provides operations wrapper on FileSystem in formats       //
-//					needed by this app                                     //
+// XmlDoc.cpp - Provides XMLDocument                                         //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
-// copyleft © Ashok Bommisetti, 2015                                      //
+// copyleft © Ashok Bommisetti, 2015                                       //
 // No guarantees on anything; But free to modify, copy and distribute      //
 // ----------------------------------------------------------------------- //
 // Author:      Ashok Bommisetti							               //

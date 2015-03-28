@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlProcElem.cpp - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XmlProcElem.cpp - Processing Instruction Element                          //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -11,6 +10,7 @@
 //*************************************************************************//
 #include "XmlProcElem.h"
 #include "../XmlTagAttribute/XmlAttr.h"
+#include <iostream>
 XmlProcElem::XmlProcElem() {
 	_name="";
 	_content="";
@@ -144,7 +144,10 @@ void XmlProcElem::toString( int depth,std::string& xmlStr ) {
 #ifdef TEST_XMLPROCELEM
 
 int main(){
-
+	XmlProcElem* xmlPr = new XmlProcElem();
+	xmlPr->setName( "ProcEleme" );
+	xmlPr->setContent( "content" );
+	std::cout << xmlPr->tagString();
 }
 
 #endif

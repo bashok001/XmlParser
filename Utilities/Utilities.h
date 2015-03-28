@@ -1,6 +1,5 @@
 //*************************************************************************//
-// Utilities.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// Utilities.h - Various string manipulations needed for XMLParser         //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,21 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
+* This package provides various utility functions needed.
 *
 * Public Interface:
 * =================
-*
-*
+*	void trimRight( std::string& str,const trimChars& trimChars = trimCharacters ); //Trims trimCharacters from right of string
+*	void trimLeft( std::string& str,const trimChars& trimChars = trimCharacters ); //Trims trimCharacters from left of string
+*	stringOut &trim( std::string& str,const trimChars& trimChars = trimCharacters ); //Trims trimCharacters on both sides of string
+*	stringOut toLower( const std::string str ); //Converts str to lowercase
+*	bool equalsIgnoreCase( const std::string a,const std::string b ); //Compares insensitive strings a and b
+*	stringOut indentString( int depth ); //Gives indentation string with depth 'depth'
+*	~Utilities() {} //Destructor
+**
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - Utilities.h, Utilities.cpp
 *
 * Build Process:
 * --------------

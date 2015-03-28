@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlPartsFactory.cpp - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XmlPartsFactory.cpp - Factory that creates elements                       //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //

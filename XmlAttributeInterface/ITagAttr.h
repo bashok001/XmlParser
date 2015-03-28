@@ -1,6 +1,5 @@
 //*************************************************************************//
-// ITagAttr.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// ITagAttr.h - Interface for Tag Attributes                                     //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,17 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
+* This is a interface for XML Tag attributes
 *
 * Public Interface:
 * =================
-*
+*	virtual attributeC &getName() = 0;
+*	virtual attributeC &getValue() = 0;
+*	virtual const attributeC toString() = 0;
 *
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - ITagAttr.h
 *
 * Build Process:
 * --------------

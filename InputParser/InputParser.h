@@ -1,6 +1,5 @@
 //*************************************************************************//
-// InputParser.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// InputParser.h - Parses input provided to the project from file or string//
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,18 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
-*
+* This package reads input from different sources.
+
 * Public Interface:
 * =================
-*
+*	InputParser(inputStr inputString) // Constructor that sets up the value in _inputString
+*	InputParser(std::istream& inputFile ); // Constructor that sets _inputString from file
+*	~InputParser(); // Destructor
+*	inputStr getParsedInput() { return _inputString; } // return _inputString
 *
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - InputParser.h, InputParser.cpp
 *
 * Build Process:
 * --------------

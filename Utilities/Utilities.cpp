@@ -1,6 +1,5 @@
 //*************************************************************************//
-// Utilities.cpp - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// Utilities.cpp - Various string manipulations needed for XMLParser         //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -9,7 +8,6 @@
 // Author:      Ashok Bommisetti							               //
 // First Published (mm-dd-yyyy): 03-24-2015 			                   //
 //*************************************************************************//
-
 #include "Utilities.h"
 #include  <iostream>
 

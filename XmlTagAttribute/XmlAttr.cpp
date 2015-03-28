@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlAttr.cpp - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XmlAttr.cpp - Implementation of XMLAttr                                   //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -10,6 +9,7 @@
 // First Published (mm-dd-yyyy): 03-24-2015 			                   //
 //*************************************************************************//
 #include "XmlAttr.h"
+#include <iostream>
 
 XmlAttr::XmlAttr() {
 	_name = "";
@@ -75,7 +75,10 @@ const std::string XmlAttr::toString() {
 #ifdef TEST_XMLATTR
 
 int main() {
-
+	XmlAttr* xmla = new XmlAttr();
+	xmla->setValue("Value");
+	xmla->setName("Name");
+	std::cout << xmla->toString();
 }
 
 #endif

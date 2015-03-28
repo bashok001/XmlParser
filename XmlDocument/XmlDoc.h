@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlDoc.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XmlDoc.h - Provides XMLDocument                                         //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,34 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
+* Provides support for creation of XMLDocument
 *
 * Public Interface:
 * =================
-*
+*	XmlDoc(); // Constructor
+*	XmlDoc( XmlDoc& xmlDoc ); //Copy constructor
+*	XmlDoc( XmlDoc&& xmlDoc ); // Move constructor
+*	XmlDoc& XmlDoc::operator=( XmlDoc& xmlDoc ); //copy assignment operator
+*	XmlDoc& XmlDoc::operator=( XmlDoc&& xmlDoc ); // move assignment operator
+*	
+*	virtual ~XmlDoc(); // Destructor
+*	virtual IXmlElem *getRoot(); // Returns doc root element
+*	void setDocRoot( IXmlElem *docRoot ); //Setter doc root
+*	virtual std::list<IXmlElem *> getProcessingInstr(); // return processing instructions
+*	void setProcElem( IXmlElem * procElem ); //add a proc element
+*	virtual std::list<IXmlElem*> getPrologue(); // get all prolog elements
+*	void setPrologue( std::list<IXmlElem*> prologueElems ); //add a prolog elem
+*	virtual std::list<IXmlElem*> getEpilogue(); //  get all epilog elements
+*	void setEpilogue( std::list<IXmlElem*> epilogueElems ); // add a epilog elem
+*	void setValid() // Sets this XMLDocument as a valid XmlDocument
+*	bool isValid() // Returns if the XMLDocument is valid
+*	IXmlElem* findElementbyTagId( const std::string& tagIdVal ); //Find elements based on Attribute value of tagid attribute
+*	std::vector<IXmlElem*> findElementsbyTagName( const std::string& tagName ); //Find list of elements with tagName = 'tagName'
+*	std::string toString( int depth ); //ToString() with descendants filled
 *
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - XmlDoc.h, XmlDoc.cpp
 *
 * Build Process:
 * --------------

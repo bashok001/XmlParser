@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XMLDomParser.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XMLDomParser.h - Parser that creates a XML Document from a XML String   //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,17 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
+* This package creates the XMLDocument class from a XML String
 *
 * Public Interface:
 * =================
-*
+* 	XmlDomParser( const XmlString& _xmlString ); // Constructor
+*	virtual ~XmlDomParser(); //Destructor
+*	XmlDoc* getXmlDoc(); //Returns Xml Document class returned from the string
 *
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - XMLDomParser.h, XMLDomParser.cpp
 *
 * Build Process:
 * --------------
@@ -51,7 +48,6 @@ class XmlDomParser {
 
 	public:
 	XmlDomParser( const XmlString& _xmlString );
-
 	virtual ~XmlDomParser();
 	XmlDoc* getXmlDoc();
 
@@ -69,7 +65,6 @@ class XmlDomParser {
 	void handleCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc );
 	void handleSelfCloseTag( std::stack < IXmlElem* >& xmlElemStack,std::vector<std::string> tokens,XmlDoc* xmlDoc );
 	int getIndex( xmlTokenVector tokVector,const std::string& charString );
-	
 	IXmlElem* makeProcElement( xmlTokenVector tokVector );
 	IXmlElem* makeCommentElement( xmlTokenVector tokVector );
 	

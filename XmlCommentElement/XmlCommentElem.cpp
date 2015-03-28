@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlCommentElem.cpp - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XmlCommentElem.cpp - Comment Element                                     //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -10,7 +9,7 @@
 // First Published (mm-dd-yyyy): 03-24-2015 			                   //
 //*************************************************************************//
 #include "XmlCommentElem.h"
-
+#include <iostream>
 XmlCommentElem::XmlCommentElem() {
 	_content = "";
 	_util = new Utilities();
@@ -78,6 +77,8 @@ XmlCommentElem::xmlTagC XmlCommentElem::tagString() {
 
 #ifdef TEST_XMLCOMMENTELEM
 int main() {
-
+	XmlCommentElem* xmlc = new XmlCommentElem();
+	xmlc->setContent( "Content" );
+	std::cout << xmlc->tagString();
 }
 #endif

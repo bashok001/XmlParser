@@ -1,6 +1,5 @@
 //*************************************************************************//
-// XmlAttr.h - Provides operations wrapper on FileSystem in formats    //
-//					needed by this app                                     //
+// XmlAttr.h - Implementation of XMLAttr                                   //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -12,19 +11,25 @@
 /*
 * Package Operations:
 * ==================
-* This package is intended to help students in CSE687 - Object Oriented Design
-* get started with Project #2 - XML Document Model.  It uses C++11 constructs,
-* most noteably std::shared_ptr.  The XML Document Model is essentially
-* a program-friendly wrapper around an Abstract Syntax Tree (AST) used to
-* contain the results of parsing XML markup.
-*
+* This package creates attributes for XML Tags
+* 
 * Public Interface:
 * =================
-*
+*   XmlAttr(); //Constructor
+*	~XmlAttr(); // Destructor
+*	XmlAttr(const XmlAttr& xmlAttribute ); // Copy constructor
+*	XmlAttr(XmlAttr&& xmlAttribute ); // Move constructor
+*	XmlAttr& XmlAttr::operator=( XmlAttr& xmlAttribute ); //Copy assignment Operator
+*	XmlAttr& XmlAttr::operator=( XmlAttr&& xmlAttribute ); // Move assignment operator
+*	virtual std::string &getName(); // returns _name 
+*	void setName( const std::string& name ); // sets _name
+*	virtual std::string& getValue(); //returns _value
+*	void setValue( const std::string& value ); //Sets _value
+*	virtual const std::string toString();//outputs string from attributes
 *
 * Required Files:
 * ---------------
-*   - Display.h, Display.cpp
+*   - XmlAttr.h, XmlAttr.cpp
 *
 * Build Process:
 * --------------
