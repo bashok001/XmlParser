@@ -1,5 +1,5 @@
 //*************************************************************************//
-// XMLDomParser.cpp - Parser that creates a XML Document from a XML String   //
+// XMLDomParser.cpp - Parser that creates a XML Document from a XML String //
 // ver 1.0                                                                 //
 // ----------------------------------------------------------------------- //
 // copyleft © Ashok Bommisetti, 2015                                       //
@@ -267,8 +267,9 @@ int main() {
 	std::cout<<xdom.getXmlDoc()->toString( 0 );
 	
 	std::string output;
-	auto x = xdom.getXmlDoc()->findElementbyTagId( "\"gem\"" );
-	std::cout << x->tagString() << std::endl << std::endl << std::endl;
+	auto x = xdom.getXmlDoc()->findElementbyTagId( "gem" );
+	if( x!=NULL )
+		std::cout << x->tagString() << std::endl << std::endl << std::endl;
 	if( x == NULL ) {
 		std::cout << "NULL POINTER." << std::endl;
 	} else {
@@ -276,7 +277,7 @@ int main() {
 		std::cout << output << std::endl;
 	}
 	std::string outputs;
-	std::vector<IXmlElem*> xs = xdom.getXmlDoc()->findElementsbyTagName( "OSEs" );
+	std::vector<IXmlElem*> xs = xdom.getXmlDoc()->findElementsbyTagName( "OS" );
 	std::cout << xs.size() << "\n\n";
 	for( auto a : xs )
 		std::cout << a->tagString() << std::endl << std::endl << std::endl;

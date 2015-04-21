@@ -3,7 +3,7 @@
 <!-- Operating Systems -->
 <!-- Microsoft -->
 <OSes>
-	<OS tagid="os" name="Linux"/>
+	<OS tagid="os" name="Linux">
 	<OS tagid="os" name="Microsoft-Windows-8.1">
 		<SetupLanguage>
 			<UILang tagid="ui">en-IN</UILang>

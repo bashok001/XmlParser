@@ -108,12 +108,15 @@ void Executive::demoRequirement5( const std::string& fileName,const std::string&
 	std::cout << xmlDom.getXmlDoc()->toString( 0 ) << std::endl;
 	std::cout << "\nAttribute key is 'tagid' \n";
 	std::cout << "\nFinding the first element with attribute value, " << tagIdVal << ": " << std::endl;
-	auto xmlElement = xmlDom.getXmlDoc()->findElementbyTagId( tagIdVal );
-	if( xmlElement != NULL )
-		std::cout << xmlElement->tagString() << std::endl;
-	else
-		std::cout << "No elements found.\n";
-
+	if( xmlDom.getXmlDoc() != NULL ) {
+		auto xmlElement = xmlDom.getXmlDoc()->findElementbyTagId( tagIdVal );
+		if( xmlElement != NULL )
+			std::cout << xmlElement->tagString() << std::endl;
+		else
+			std::cout << "No elements found.\n";
+	} else {
+		xmlDom.getXmlDoc()->toString( 0 );
+	}
 	pauseToWait();
 	clearScreen();
 }

@@ -170,8 +170,11 @@ void XmlDoc::setEpilogue( std::list<IXmlElem*> epilogueElems ) {
 }
 
 IXmlElem* XmlDoc::findElementbyTagId( const std::string& tagIdVal ) {
-	IXmlElem* resultSet = recursiveFind( "\""+tagIdVal+"\"",_docRoot );
-	return resultSet;
+	if( _valid ) {
+		IXmlElem* resultSet = recursiveFind( "\"" + tagIdVal + "\"",_docRoot );
+		return resultSet;
+	} else
+		return NULL;
 }
 
 IXmlElem* XmlDoc::recursiveFind( const std::string& tagIdVal,IXmlElem* elem ) {
@@ -191,7 +194,10 @@ IXmlElem* XmlDoc::recursiveFind( const std::string& tagIdVal,IXmlElem* elem ) {
 }
 
 std::vector<IXmlElem*> XmlDoc::findElementsbyTagName( const std::string& tagIdVal ) {
-	return recursiveElemsFind( tagIdVal,_docRoot );
+	if( _valid )
+		return recursiveElemsFind( tagIdVal,_docRoot );
+	else
+		return {};
 }
 
 std::vector<IXmlElem*> XmlDoc::recursiveElemsFind( const std::string& tagName,IXmlElem* elem ) {
@@ -248,14 +254,14 @@ std::string XmlDoc::toString( int depth ) {
 int main() {
 	std::cout << "Working\n";
 	XmlDoc xmldoc;
-	std::cout << xmldoc.isValid() << "\n";
+//	std::cout << xmldoc.isValid() << "\n";
 	xmldoc.setValid();
 
 	IXmlElem* docroot = new XmlTaggedElem();
 
 	xmldoc.setDocRoot( docroot );
 
-	std::cout << xmldoc.isValid() << "\n";
+	//std::cout << xmldoc.isValid() << "\n";
 	std::cout << xmldoc.toString( 0 ) << "\n ************* \n";
 }
 

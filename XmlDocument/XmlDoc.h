@@ -75,7 +75,7 @@ class XmlDoc : public IXmlDocument {
 	virtual std::list<IXmlElem*> getEpilogue();
 	void setEpilogue( std::list<IXmlElem*> epilogueElems );
 	void setValid() { _valid = true; }
-	bool isValid() { return _valid; }
+	//bool isValid() { return _valid; }
 	IXmlElem* findElementbyTagId( const std::string& tagIdVal );
 	std::vector<IXmlElem*> findElementsbyTagName( const std::string& tagIdVal );
 	std::string toString( int depth );
